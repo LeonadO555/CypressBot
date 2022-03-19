@@ -29,6 +29,7 @@ class DoJobPage {
           completeJobPage.clickCompleteJobOrLogout();
         }
         cy.task('log', `Stamina ${value}`);
+
       });
   }
 
