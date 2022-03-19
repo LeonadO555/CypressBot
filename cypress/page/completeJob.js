@@ -37,6 +37,7 @@ class CompleteJob {
 
               logoutPage.clickMenuAndLogout();
               cy.task('log', 'I logout');
+              cy.wait(5000);
             });
         } else {
           logoutPage.clickMenuAndLogout();
