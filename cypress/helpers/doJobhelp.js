@@ -37,7 +37,7 @@ class DoJobHelp {
         if (value === 0) {
           completeJobPage.clickCompleteJobOrLogout();
         } else {
-          for (let i = 0; i < 100; i++) {
+          for (let i = 0; i < 200; i++) {
             cy.get('body').then(($mainPage) => {
               const mainPageButton = $mainPage.find('a[href="https://docs.milliononmars.com/whitepaper/"]');
               if (mainPageButton.text().includes('Whitepaper')) {
