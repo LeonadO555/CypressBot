@@ -1,0 +1,51 @@
+// ==UserScript==
+// @name         AtomicHubAutoBuyer
+// @namespace    http://tampermonkey.net/
+// @version      1.1
+// @description  Grab stonks!
+// @author       Hazard
+// @match        https://wax.atomichub.io/drops/*
+// @grant        none
+// ==/UserScript==
+
+window.onload =(function () {
+
+    var StartBuy = function()
+    {
+        document.getElementById('btnABS').disabled = true;
+
+        (function Buying()
+        {
+            if(document.getElementsByClassName("btn btn-primary btn-block")[0].disabled != true)
+            {
+                document.getElementsByClassName("btn btn-primary btn-block")[0].click(); //buy bytton
+
+                if(document.getElementsByClassName("btn btn-primary btn-block")[1]!=null)
+                {
+                    (function Payment()
+                    {
+                        document.getElementsByClassName("btn btn-primary btn-block")[1].click(); //pay with wax button
+                        if(document.getElementsByClassName("btn btn-primary btn-block")[1]!=null)
+                            setTimeout(Payment, 500);
+                        else
+                            return;
+                    })();
+                }
+                return;
+            }
+            setTimeout(Buying, 10);
+        })();
+    };
+
+    var CreateButton = function(){
+
+        var createdBut = document.createElement('button');
+        createdBut.innerHTML = 'Start Auto Buy';
+        createdBut.id = 'btnABS';
+        createdBut.style.background="#ED760E";
+
+        document.documentElement.getElementsByTagName("BUTTON")[0].insertAdjacentHTML('afterEnd', createdBut.outerHTML);
+        document.getElementById('btnABS').onclick = StartBuy;
+    }();
+
+})();

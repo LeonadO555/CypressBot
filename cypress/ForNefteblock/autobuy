@@ -1,0 +1,51 @@
+// ==UserScript==
+// @name         NeftyHubAutoBuyer
+// @namespace    http://tampermonkey.net/
+// @version      3
+// @description  Grab stonks!
+// @author       Jkmat032
+// @match        *://*/*
+// @grant        none
+// @run-at      document-onload
+// ==/UserScript==
+
+
+window.onload =(function () {
+
+    // Пробуем нажать на рекпатчу
+    setTimeout(function() {
+                          document.getElementsByClassName("recaptcha-checkbox-checkmark")[0].click();
+                          document.getElementsByClassName("rc-button goog-inline-block")[0].click();
+                          },62);
+
+    var StartBuy = function()
+    {
+        document.getElementById('btnABS').disabled = true;
+
+        (function Buying()
+        {
+            if(document.getElementsByClassName("v-btn v-btn--block")[0].disabled != true)
+            {
+                document.getElementsByClassName("v-btn v-btn--block")[0].click(); //buy bytton
+                console.log('Купили');
+                return 0;
+            }
+            setTimeout(Buying, 10);
+        })();
+    };
+
+    var CreateButton = function()
+    {
+        var createdBut = document.createElement('button');
+        createdBut.innerHTML = 'Start Auto Buy';
+        createdBut.id = 'btnABS';
+        createdBut.style.background="#ED760E";
+        document.documentElement.getElementsByClassName("v-breadcrumbs__item v-breadcrumbs__item--disabled")[0].insertAdjacentHTML('afterEnd', createdBut.outerHTML);
+        document.getElementById('btnABS').onclick = StartBuy;
+        return;
+    };
+
+    setTimeout(CreateButton, 5000);
+
+
+})();
