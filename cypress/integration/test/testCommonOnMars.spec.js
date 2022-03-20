@@ -22,6 +22,14 @@ describe('DO JOB', () => {
     PASSWORD_LEO_SECOND: '4d%XG43XqK4**mB',
     USERNAME_LEO_THIRD: 'acheho281@gmail.com',
     PASSWORD_LEO_THIRD: '/;+Qt3fkK*wn[\'f',
+    USERNAME_LEO_FOURTH: 'nneprihiv@gmail.com',
+    PASSWORD_LEO_FOURTH: 'C7C-dBj-kGu-3C9',
+    USERNAME_LEO_FIFTH: 'poleva1marina@gmail.com',
+    PASSWORD_LEO_FIFTH: 'FQq-Cag-DVC-9fW',
+    USERNAME_LEO_SIXTH: 'ik5772699@gmail.com',
+    PASSWORD_LEO_SIXTH: '123qwert123!!',
+    USERNAME_LEO_SEVENTH: 'konirovA195@gmail.com',
+    PASSWORD_LEO_SEVENTH: 'Ghy_139_klo-1',
     USERNAME_MIHA_FIRST: 'dorogovmihailo@yandex.ru',
     PASSWORD_MIHA_FIRST: '2105971997mishoB!',
     USERNAME_MIHA_SECOND: 'mdorogov52@gmail.com',
@@ -51,18 +59,38 @@ describe('DO JOB', () => {
     doJobHelp.clickDoJobOrLogout()
 
     doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_MIHA_FIRST, env.PASSWORD_MIHA_FIRST);
+    loginPage.loginUser(env.USERNAME_LEO_FOURTH, env.PASSWORD_LEO_FOURTH);
     cy.task('log', 'username5');
+    doJobHelp.clickDoJobOrLogout()
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_LEO_FIFTH, env.PASSWORD_LEO_FIFTH);
+    cy.task('log', 'username6');
+    doJobHelp.clickDoJobOrLogout()
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_LEO_SIXTH, env.PASSWORD_LEO_SIXTH);
+    cy.task('log', 'username7');
+    doJobHelp.clickDoJobOrLogout()
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_LEO_SEVENTH, env.PASSWORD_LEO_SEVENTH);
+    cy.task('log', 'username8');
+    doJobHelp.clickDoJobOrLogout()
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_MIHA_FIRST, env.PASSWORD_MIHA_FIRST);
+    cy.task('log', 'username9');
     doJobHelp.clickDoJobOrLogout();
 
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_MIHA_SECOND, env.PASSWORD_MIHA_SECOND);
-    cy.task('log', 'username6');
+    cy.task('log', 'username10');
     doJobHelp.clickDoJobOrLogout();
 
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_MIHA_THIRD, env.PASSWORD_MIHA_THIRD);
-    cy.task('log', 'username7');
+    cy.task('log', 'username11');
     doJobHelp.clickDoJobOrLogout();
   });
 });
