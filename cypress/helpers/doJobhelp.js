@@ -30,6 +30,7 @@ class DoJobHelp {
           const checkEatRation = $eatRation.find('tr.MuiTableRow-root:nth-child(4)').find('button[aria-label="add"]')
           if(!checkEatRation.attr('disabled')){
             cy.get('button[aria-label="add"]').contains('Eat Ration').should('be.visible').click();
+            cy.task('log', 'click Eat Ration');
             cy.contains('Confirm').should('be.visible').click();
             cy.wait(1000);
             cy.get('div[role="dialog"]')
@@ -59,6 +60,7 @@ class DoJobHelp {
       .then((text) => +text)
       .then((value) => {
         if (value === 0) {
+          cy.task('log', `Stamina ${value}`);
           completeJobPage.clickCompleteJobOrLogout();
         } else {
           for (let i = 0; i < 300; i++) {

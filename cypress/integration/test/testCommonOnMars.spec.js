@@ -47,22 +47,22 @@ describe('DO JOB', () => {
 
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_LEO_THIRD, env.PASSWORD_LEO_THIRD);
-    cy.task('log', 'username3');
+    cy.task('log', 'username4');
     doJobHelp.clickDoJobOrLogout()
 
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_MIHA_FIRST, env.PASSWORD_MIHA_FIRST);
-    cy.task('log', 'username4');
-    doJobHelp.clickDoJobOrLogout();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_MIHA_SECOND, env.PASSWORD_MIHA_SECOND);
     cy.task('log', 'username5');
     doJobHelp.clickDoJobOrLogout();
 
     doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_MIHA_THIRD, env.PASSWORD_MIHA_THIRD);
+    loginPage.loginUser(env.USERNAME_MIHA_SECOND, env.PASSWORD_MIHA_SECOND);
     cy.task('log', 'username6');
+    doJobHelp.clickDoJobOrLogout();
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_MIHA_THIRD, env.PASSWORD_MIHA_THIRD);
+    cy.task('log', 'username7');
     doJobHelp.clickDoJobOrLogout();
   });
 });
