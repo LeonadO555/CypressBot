@@ -24,7 +24,31 @@ class DoJobHelp {
         cy.task('log', 'I catch Eat Ration');
       } else {
         doJobPage.clickCloseButton();
-        cy.task('log', 'I not catch Eat Ration');
+        cy.task('log', 'I not click Claim');
+        cy.contains('Actions').should('be.visible').click();
+        cy.get('div[role="dialog"]').then(($eatRation)=>{
+          const checkEatRation = $eatRation.find('tr.MuiTableRow-root:nth-child(4)').find('button[aria-label="add"]')
+          if(!checkEatRation.attr('disabled')){
+            cy.get('button[aria-label="add"]').contains('Eat Ration').should('be.visible').click();
+            cy.contains('Confirm').should('be.visible').click();
+            cy.wait(1000);
+            cy.get('div[role="dialog"]')
+              .get('button[type=button]')
+              .eq(2)
+              .should('be.visible')
+              .click({ multiple: true, force: true });
+            cy.task('log', 'I catch Eat Ration');
+          }
+          else {
+            cy.get('div[role="dialog"]')
+              .get('button[type=button]')
+              .eq(2)
+              .should('be.visible')
+              .click({ multiple: true, force: true });
+            cy.task('log', 'I no catch Eat Ration');
+          }
+        })
+
       }
     });
     doJobPage.clickPageJob();
