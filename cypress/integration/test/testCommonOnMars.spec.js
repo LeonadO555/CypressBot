@@ -20,6 +20,8 @@ describe('DO JOB', () => {
     PASSWORD_LEO_FIRST: 'eUn3RXq7Z^BCPk.',
     USERNAME_LEO_SECOND: 'sergey.beletski1989@gmail.com',
     PASSWORD_LEO_SECOND: '4d%XG43XqK4**mB',
+    USERNAME_LEO_THIRD: 'acheho281@gmail.com',
+    PASSWORD_LEO_THIRD: '/;+Qt3fkK*wn[\'f',
     USERNAME_MIHA_FIRST: 'dorogovmihailo@yandex.ru',
     PASSWORD_MIHA_FIRST: '2105971997mishoB!',
     USERNAME_MIHA_SECOND: 'mdorogov52@gmail.com',
@@ -42,6 +44,11 @@ describe('DO JOB', () => {
     loginPage.loginUser(env.USERNAME_LEO_SECOND, env.PASSWORD_LEO_SECOND);
     cy.task('log', 'username3');
     doJobHelp.clickDoJobOrLogout();
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_LEO_THIRD, env.PASSWORD_LEO_THIRD);
+    cy.task('log', 'username3');
+    doJobHelp.clickDoJobOrLogout()
 
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_MIHA_FIRST, env.PASSWORD_MIHA_FIRST);
