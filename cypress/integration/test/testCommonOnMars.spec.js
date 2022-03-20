@@ -40,12 +40,12 @@ describe('DO JOB', () => {
   it('Click Do Job button and wait 1 minute', () => {
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_LENA_FIRST, env.PASSWORD_LENA_FIRST);
-    cy.task('log', 'username2');
+    cy.task('log', 'username1');
     doJobHelp.clickDoJobOrLogout();
 
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_LEO_FIRST, env.PASSWORD_LEO_FIRST);
-    cy.task('log', 'username1');
+    cy.task('log', 'username2');
     doJobHelp.clickDoJobOrLogout();
 
     doJobPage.linkToJob();
