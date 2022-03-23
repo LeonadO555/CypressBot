@@ -1,7 +1,3 @@
-import CompleteJob from './completeJob';
-
-const completeJobPage = new CompleteJob();
-
 class DoJobPage {
   linkToJob() {
     cy.clearCookies();
@@ -16,21 +12,6 @@ class DoJobPage {
   }
   clickPageJob() {
     cy.get('a.MuiButton-root:nth-child(2)').click().should('be.visible');
-  }
-
-  getStaminaAndLogout() {
-    cy.get('div[title="Stamina"]')
-      .get('div:nth-child(5) > span')
-      .should('be.visible')
-      .invoke('text')
-      .then((text) => +text)
-      .then((value) => {
-        if (value === 0) {
-          completeJobPage.clickCompleteJobOrLogout();
-        }
-        cy.task('log', `Stamina ${value}`);
-
-      });
   }
 
   clickDoJobButton() {
@@ -56,7 +37,6 @@ class DoJobPage {
         });
       } else {
         cy.log('ok');
-        cy.task('log', 'Button disabled');
       }
     });
   }

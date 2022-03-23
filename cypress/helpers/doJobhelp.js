@@ -7,13 +7,16 @@ const completeJobPage = new CompleteJob();
 class DoJobHelp {
   clickDoJobOrLogout() {
     cy.wait(15000);
-    cy.get('button[type="button"]').then(($claimButton) => {
-      const item = $claimButton.find('>span');
+    cy.get('div[role="dialog"]').then(($claimButton) => {
+      const item = $claimButton.find('button[type="button"]').find('>span');
       if (item.text().includes('Claim')) {
-        cy.contains('Claim').click();
+        cy.get('div[role="dialog"]').find('button[type="button"]').find('>span').contains('Claim').click();
+        cy.task('log','Click Claim')
         doJobPage.clickCloseButton();
         cy.contains('Actions').should('be.visible').click();
+        cy.task('log','Click Actions')
         cy.get('div[role="dialog"]').get('button[type=button]').contains('Eat Ration').should('be.visible').click();
+        cy.task('log','Click Eat Ration')
         cy.contains('Confirm').should('be.visible').click();
         cy.wait(1000);
         cy.get('div[role="dialog"]')
@@ -53,31 +56,26 @@ class DoJobHelp {
       }
     });
     doJobPage.clickPageJob();
-    cy.get('div[title="Stamina"]')
-      .get('div:nth-child(5) > span')
-      .should('be.visible')
-      .invoke('text')
-      .then((text) => +text)
-      .then((value) => {
-        if (value === 0) {
-          cy.task('log', `Stamina ${value}`);
-          completeJobPage.clickCompleteJobOrLogout();
-        } else {
-          for (let i = 0; i < 300; i++) {
-            cy.get('body').then(($mainPage) => {
-              const mainPageButton = $mainPage.find('a[href="https://docs.milliononmars.com/whitepaper/"]');
-              if (mainPageButton.text().includes('Whitepaper')) {
-                cy.task('log', 'Exit from cycle');
-                return;
-              } else {
-                doJobPage.clickDoJobButton();
-                doJobPage.getStaminaAndLogout();
-                cy.task('log', 'No exit from cycle');
-              }
-            });
-          }
-        }
-      });
+    checkAndReload()
   }
 }
 export default DoJobHelp;
+
+const checkAndReload = () => {
+  cy.get('div[title="Stamina"]')
+    .get('div:nth-child(5) > span')
+    .should('be.visible')
+    .invoke('text')
+    .then(parseInt)
+    .then((number) => {
+      if (number === 0) {
+        cy.task('log', `Stamina ${number}`);
+        completeJobPage.clickCompleteJobOrLogout();
+        return
+      }
+      cy.task('log', `Stamina ${number}`);
+      doJobPage.clickDoJobButton();
+      checkAndReload()
+    })
+}
+
