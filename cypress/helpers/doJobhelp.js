@@ -56,26 +56,47 @@ class DoJobHelp {
       }
     });
     doJobPage.clickPageJob();
-    checkAndReload()
+    checkAndDoJob()
   }
 }
 export default DoJobHelp;
 
-const checkAndReload = () => {
+const checkAndDoJob = () => {
   cy.get('div[title="Stamina"]')
     .get('div:nth-child(5) > span')
     .should('be.visible')
     .invoke('text')
     .then(parseInt)
-    .then((number) => {
-      if (number === 0) {
-        cy.task('log', `Stamina ${number}`);
+    .then((numberStamina) => {
+      if (numberStamina === 0) {
+        cy.task('log', `Stamina ${numberStamina}`);
+        checkDusk()
         completeJobPage.clickCompleteJobOrLogout();
         return
       }
-      cy.task('log', `Stamina ${number}`);
+      cy.task('log', `Stamina ${numberStamina}`);
       doJobPage.clickDoJobButton();
-      checkAndReload()
+      checkAndDoJob()
+    })
+}
+const checkDusk = () => {
+  cy.get('div')
+    .get('div:nth-child(6) > span')
+    .should('be.visible')
+    .invoke('text')
+    .then(parseInt)
+    .then((numberDusk) => {
+    cy.task('log', `Dusk ${numberDusk}`)
+      checkUser()
     })
 }
 
+const checkUser = () => {
+  cy.get('#__next > header > div')
+    .find('> button > span.MuiButton-label > span')
+    .should('be.visible')
+    .invoke('text')
+    .then((name) => {
+      cy.task('log', `${name}`)
+    })
+}

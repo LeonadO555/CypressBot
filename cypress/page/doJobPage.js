@@ -20,6 +20,7 @@ class DoJobPage {
       const checkButtonEnabled = $button.find('button[aria-label="add"]');
       if (!checkButtonEnabled.attr('disabled')) {
         cy.contains('Do Job', { timeout: 100000000 }).should('not.be.disabled').click({ force: true, multiple: true });
+        cy.task('log', 'I click Do Job');
         cy.get('body').then(($buttonConf) => {
           const item = $buttonConf.find('.MuiDialog-paper').find('button[type=button]').eq(2).find('> span');
           const itemName = $buttonConf.find('.MuiDialog-paper').find('.MuiTypography-h6');
@@ -28,10 +29,10 @@ class DoJobPage {
           } else {
             if (item.text().includes('Confirm')) {
               cy.contains('Confirm').click({ force: true });
-              cy.task('log', 'I catch Job');
+              cy.task('log', 'I click Confirm');
             } else {
               cy.log('ok');
-              cy.task('log', 'I not catch Job');
+              cy.task('log', 'I not click Confirm');
             }
           }
         });
