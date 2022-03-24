@@ -64,7 +64,6 @@ export default DoJobHelp;
 const checkAndDoJob = () => {
   cy.get('div[title="Stamina"]')
     .get('div:nth-child(5) > span')
-    .should('be.visible')
     .invoke('text')
     .then(parseInt)
     .then((numberStamina) => {
