@@ -4,7 +4,7 @@
   "viewportHeight": 800,
   "pageLoadTimeout": 140000,
   "taskTimeout": 10000000,
-  "defaultCommandTimeout": 20000,
+  "defaultCommandTimeout": 30000,
   "screenshotOnRunFailure": false,
   "video": false,
   "retries": {
