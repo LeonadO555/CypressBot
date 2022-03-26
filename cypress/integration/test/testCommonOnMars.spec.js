@@ -36,6 +36,16 @@ describe('DO JOB', () => {
     PASSWORD_MIHA_SECOND: '2105971997mishob',
     USERNAME_MIHA_THIRD: 'dorogovmihail53@gmail.com',
     PASSWORD_MIHA_THIRD: '2105971997mishob',
+    USERNAME_IGOR_1: 'Khan.Curze@gmail.com',
+    PASSWORD_IGOR_1: 'astramiletarum',
+    USERNAME_IGOR_2: 'Konrad.Guilliman@gmail.com',
+    PASSWORD_IGOR_2: 'astramiletarum',
+    USERNAME_IGOR_3: 'rogal.manus@gmail.com',
+    PASSWORD_IGOR_3: 'astramiletarum',
+    USERNAME_IGOR_4: 'rogal.corax@gmail.com',
+    PASSWORD_IGOR_4: 'astramiletarum',
+    USERNAME_IGOR_5: 'ferrus.curze@gmail.com',
+    PASSWORD_IGOR_5: 'astramiletarum',
   };
   it('Click Do Job button and wait 1 minute', () => {
     const arr = [];
@@ -122,6 +132,46 @@ describe('DO JOB', () => {
     doJobPage.linkToJob();
     loginPage.loginUser(env.USERNAME_MIHA_THIRD, env.PASSWORD_MIHA_THIRD);
     cy.task('log', 'username11');
+    doJobHelp.checkAndTakeEat();
+    AllCheck(arr);
+    clickButtonJob();
+    checkAndDoJob();
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_IGOR_1, env.PASSWORD_IGOR_1);
+    cy.task('log', 'username12');
+    doJobHelp.checkAndTakeEat();
+    AllCheck(arr);
+    clickButtonJob();
+    checkAndDoJob();
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_IGOR_2, env.PASSWORD_IGOR_2);
+    cy.task('log', 'username13');
+    doJobHelp.checkAndTakeEat();
+    AllCheck(arr);
+    clickButtonJob();
+    checkAndDoJob();
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_IGOR_3, env.USERNAME_IGOR_3);
+    cy.task('log', 'username14');
+    doJobHelp.checkAndTakeEat();
+    AllCheck(arr);
+    clickButtonJob();
+    checkAndDoJob();
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_IGOR_4, env.PASSWORD_IGOR_4);
+    cy.task('log', 'username15');
+    doJobHelp.checkAndTakeEat();
+    AllCheck(arr);
+    clickButtonJob();
+    checkAndDoJob();
+
+    doJobPage.linkToJob();
+    loginPage.loginUser(env.USERNAME_IGOR_5, env.PASSWORD_IGOR_5);
+    cy.task('log', 'username16');
     doJobHelp.checkAndTakeEat();
     AllCheck(arr);
     clickButtonJob();
