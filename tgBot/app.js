@@ -41,6 +41,12 @@ bot.hears('Button for WebMonkey', (ctx) => {
   });
 });
 
+bot.hears('LogBot', (ctx) => {
+  ctx.replyWithPhoto('https://s5o.ru/storage/simple/ua/ugc/34/49/0b/13/uau44cb127072.jpg', {
+    caption: 'While here is the image',
+  });
+});
+
 bot.launch();
 
 app.listen(PORT, () => console.log(`My server is running on port ${PORT}`));
