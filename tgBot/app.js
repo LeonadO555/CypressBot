@@ -13,9 +13,7 @@ bot.start((ctx) => {
 bot.hears('Actual user viewing data', async (ctx) => {
   const data = await getActualUser();
   let result = '';
-
-  let i = 0;
-  result = result + `[${i + 1}] ${data}\n`;
+  result = result + `${data}\n`;
   let date = new Date();
   ctx.replyWithHTML(`<b>${date}</b>\n` + '<b>List actual user data:</b>\n\n' + `${result}`);
   ctx.replyWithPhoto('https://sysblok.ru/wp-content/uploads/2020/09/anekdoty.jpg', {
@@ -26,9 +24,7 @@ bot.hears('Actual user viewing data', async (ctx) => {
 bot.hears('All users viewing data', async (ctx) => {
   const data = await getAllUsers();
   let result = '';
-  for (let i = 0; i < 11; i++) {
-    result = result + `[${i + 1}] ${data}\n`;
-  }
+  result = result + `${data}\n`;
   let date = new Date();
   ctx.replyWithHTML(`<b>${date}</b>\n` + '<b>List all users data:</b>\n\n' + `${result}`);
   ctx.replyWithPhoto('https://proza.ru/pics/2019/11/18/834.jpg', {
