@@ -1,5 +1,5 @@
 import LoginPage from '../../page/loginPage';
-import DoJobHelp, { AllCheck, checkAndDoJob } from '../../helpers/doJobhelp';
+import DoJobHelp, { AllCheck, checkAndDoJob, waxDusk } from '../../helpers/doJobhelp';
 import DoJobPage, { clickButtonJob } from '../../page/doJobPage';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -126,6 +126,7 @@ describe('DO JOB', () => {
     AllCheck(arr);
     clickButtonJob();
     checkAndDoJob();
+    waxDusk(arr);
     cy.writeFile('dataAllUser.json', arr);
   });
 });

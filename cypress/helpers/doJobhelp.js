@@ -116,3 +116,13 @@ export const AllCheck = (arr) => {
   checkDusk(arr);
   checkStamina(arr);
 };
+
+export const waxDusk = (arr) => {
+  cy.visit('https://wax.alcor.exchange/swap?output=DUSK-dusk.onmars&input=WAX-eosio.token');
+  cy.get('.each-item-price-container')
+    .get('> div:nth-child(2) > span:nth-child(2)')
+    .invoke('text')
+    .then((waxDuskValue) => {
+      arr.push(`Wax/Dusk: ${waxDuskValue}`);
+    });
+};
