@@ -1,6 +1,4 @@
-import LoginPage from '../../page/loginPage';
-import DoJobHelp, { AllCheck, checkAndDoJob } from '../../helpers/doJobhelp';
-import DoJobPage, { clickButtonJob } from '../../page/doJobPage';
+import { onMarsCommon } from '../../common/commonOnMars';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -10,9 +8,6 @@ before(function () {
 });
 
 describe('DO JOB', () => {
-  const loginPage = new LoginPage();
-  const doJobHelp = new DoJobHelp();
-  const doJobPage = new DoJobPage();
   let env = {
     USERNAME_LENA_FIRST: 'content.poluyan@gmail.com',
     PASSWORD_LENA_FIRST: 'marianna6537',
@@ -49,133 +44,22 @@ describe('DO JOB', () => {
   };
   it('Click Do Job button and wait 1 minute', () => {
     const arr = [];
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LENA_FIRST, env.PASSWORD_LENA_FIRST);
-    cy.task('log', 'username1');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LEO_FIRST, env.PASSWORD_LEO_FIRST);
-    cy.task('log', 'username2');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LEO_SECOND, env.PASSWORD_LEO_SECOND);
-    cy.task('log', 'username3');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LEO_THIRD, env.PASSWORD_LEO_THIRD);
-    cy.task('log', 'username4');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LEO_FOURTH, env.PASSWORD_LEO_FOURTH);
-    cy.task('log', 'username5');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LEO_FIFTH, env.PASSWORD_LEO_FIFTH);
-    cy.task('log', 'username6');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LEO_SIXTH, env.PASSWORD_LEO_SIXTH);
-    cy.task('log', 'username7');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_LEO_SEVENTH, env.PASSWORD_LEO_SEVENTH);
-    cy.task('log', 'username8');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_MIHA_FIRST, env.PASSWORD_MIHA_FIRST);
-    cy.task('log', 'username9');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_MIHA_SECOND, env.PASSWORD_MIHA_SECOND);
-    cy.task('log', 'username10');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_MIHA_THIRD, env.PASSWORD_MIHA_THIRD);
-    cy.task('log', 'username11');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_IGOR_1, env.PASSWORD_IGOR_1);
-    cy.task('log', 'username12');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_IGOR_2, env.PASSWORD_IGOR_2);
-    cy.task('log', 'username13');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_IGOR_3, env.USERNAME_IGOR_3);
-    cy.task('log', 'username14');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_IGOR_4, env.PASSWORD_IGOR_4);
-    cy.task('log', 'username15');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
-
-    doJobPage.linkToJob();
-    loginPage.loginUser(env.USERNAME_IGOR_5, env.PASSWORD_IGOR_5);
-    cy.task('log', 'username16');
-    doJobHelp.checkAndTakeEat();
-    AllCheck(arr);
-    clickButtonJob();
-    checkAndDoJob();
+    onMarsCommon(env.USERNAME_LENA_FIRST, env.PASSWORD_LENA_FIRST, arr, 'username 1');
+    onMarsCommon(env.USERNAME_LEO_FIRST, env.PASSWORD_LEO_FIRST, arr, 'username 2');
+    onMarsCommon(env.USERNAME_LEO_SECOND, env.PASSWORD_LEO_SECOND, arr, 'username 3');
+    onMarsCommon(env.USERNAME_LEO_THIRD, env.PASSWORD_LEO_THIRD, arr, 'username 4');
+    onMarsCommon(env.USERNAME_LEO_FOURTH, env.PASSWORD_LEO_FOURTH, arr, 'username 5');
+    onMarsCommon(env.USERNAME_LEO_FIFTH, env.PASSWORD_LEO_FIFTH, arr, 'username 6');
+    onMarsCommon(env.USERNAME_LEO_SIXTH, env.PASSWORD_LEO_SIXTH, arr, 'username 7');
+    onMarsCommon(env.USERNAME_LEO_SEVENTH, env.PASSWORD_LEO_SEVENTH, arr, 'username 8');
+    onMarsCommon(env.USERNAME_MIHA_FIRST, env.PASSWORD_MIHA_FIRST, arr, 'username 9');
+    onMarsCommon(env.USERNAME_MIHA_SECOND, env.PASSWORD_MIHA_SECOND, arr, 'username 10');
+    onMarsCommon(env.USERNAME_MIHA_THIRD, env.PASSWORD_MIHA_THIRD, arr, 'username 11');
+    onMarsCommon(env.USERNAME_IGOR_1, env.PASSWORD_IGOR_1, arr, 'username 12');
+    onMarsCommon(env.USERNAME_IGOR_2, env.PASSWORD_IGOR_2, arr, 'username 13');
+    onMarsCommon(env.USERNAME_IGOR_3, env.PASSWORD_IGOR_3, arr, 'username 14');
+    onMarsCommon(env.USERNAME_IGOR_4, env.PASSWORD_IGOR_4, arr, 'username 15');
+    onMarsCommon(env.USERNAME_IGOR_5, env.PASSWORD_IGOR_5, arr, 'username 16');
     cy.writeFile('dataAllUser.json', arr);
   });
 });
