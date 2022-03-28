@@ -21,5 +21,6 @@
     "cypress-pipe": "^2.0.0",
     "prettier": "^2.5.1",
     "task": "^1.3.2"
-  }
+  },
+  "type": "module"
 }
