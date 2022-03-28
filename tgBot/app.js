@@ -15,9 +15,8 @@ bot.hears('Actual user viewing data', async (ctx) => {
   let result = '';
   result = result + `${data}\n`;
   let date = new Date();
-  ctx.replyWithHTML(`<b>${date}</b>\n` + '<b>List actual user data:</b>\n\n' + `${result}`);
   ctx.replyWithPhoto('https://sysblok.ru/wp-content/uploads/2020/09/anekdoty.jpg', {
-    caption: 'Farm farm farm baby!',
+    caption: `${date}\n` + 'List actual user data:\n\n' + `${result}`,
   });
 });
 
@@ -26,9 +25,8 @@ bot.hears('All users viewing data', async (ctx) => {
   let result = '';
   result = result + `${data}\n`;
   let date = new Date();
-  ctx.replyWithHTML(`<b>${date}</b>\n` + '<b>List all users data:</b>\n\n' + `${result}`);
   ctx.replyWithPhoto('https://proza.ru/pics/2019/11/18/834.jpg', {
-    caption: 'Waiting for all users to run',
+    caption: `${date}\n` + 'List all users data:\n\n' + `${result}`,
   });
 });
 bot.hears('Button for WebMonkey', (ctx) => {
