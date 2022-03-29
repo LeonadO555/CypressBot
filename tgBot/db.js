@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-let dataActualUser = fs.readFileSync('/Users/leo/Downloads/dojob-main/tmp/dataActualUser.json', 'utf8');
-let dataAllUsers = fs.readFileSync('/Users/leo/Downloads/dojob-main/tmp/dataAllUser.json', 'utf8');
+let dataActualUser = fs.readFileSync('MacintoshHD/Users/leo/Downloads/dojob-main/tmp/dataActualUser.json', 'utf8');
+let dataAllUsers = fs.readFileSync('MacintoshHD/Users/leo/Downloads/dojob-main/tmp/dataAllUser.json', 'utf8');
 export function getActualUser() {
   return new Promise((resolve) => {
     setTimeout(() => {
