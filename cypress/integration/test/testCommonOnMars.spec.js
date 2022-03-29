@@ -60,6 +60,6 @@ describe('DO JOB', () => {
     onMarsCommon(env.USERNAME_IGOR_3, env.PASSWORD_IGOR_3, arr, 'username 14');
     onMarsCommon(env.USERNAME_IGOR_4, env.PASSWORD_IGOR_4, arr, 'username 15');
     onMarsCommon(env.USERNAME_IGOR_5, env.PASSWORD_IGOR_5, arr, 'username 16');
-    cy.writeFile('/Users/leo/Downloads/dojob-main/tmp/dataAllUser.json', arr);
+    cy.writeFile('~/tmp/dataAllUser.json', arr);
   });
 });
