@@ -3,13 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "tgBot/app.js",
-  "bin": {
-    "telegraf": "bin/telegraf"
-  },
   "scripts": {
     "test": "nodemon tgBot/app.js"
   },
-  "type": "commonjs",
   "keywords": [],
   "author": "",
   "license": "ISC",
