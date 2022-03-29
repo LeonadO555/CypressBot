@@ -1,10 +1,36 @@
 const express = require('express');
 const { Telegraf } = require('telegraf');
-const { getMainMenu } = require('./keyboards.js');
-const { getActualUser, getAllUsers } = require('./db.js');
+const { Markup } = require('telegraf');
+const { fs } = require('fs');
 
 const app = express();
 const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
+
+function getMainMenu() {
+  return Markup.keyboard([
+    ['Actual user viewing data'],
+    ['All users viewing data'],
+    ['Button for WebMonkey'],
+    ['LogBot'],
+  ]).resize();
+}
+
+let dataActualUser = fs.readFileSync('tmp/dataActualUser.json', 'utf8');
+let dataAllUsers = fs.readFileSync('tmp/dataAllUser.json', 'utf8');
+function getActualUser() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dataActualUser);
+    }, 500);
+  });
+}
+function getAllUsers() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dataAllUsers);
+    }, 500);
+  });
+}
 
 bot.start((ctx) => {
   ctx.reply('Yo guys', getMainMenu());
