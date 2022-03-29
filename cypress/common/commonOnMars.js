@@ -1,7 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
-
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
   cy.task('log', 'I FOLLOWED THE LINK');
