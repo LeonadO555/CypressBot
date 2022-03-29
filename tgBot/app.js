@@ -1,8 +1,8 @@
 const express = require('express');
 const { PORT, TOKEN } = require('./config.js');
-import { Telegraf } from 'telegraf';
-import { getMainMenu } from './keyboards.js';
-import { getActualUser, getAllUsers } from './db.js';
+const { Telegraf } = require('telegraf');
+const { getMainMenu } = require('./keyboards.js');
+const { getActualUser, getAllUsers } = require('./db.js');
 
 const app = express();
 const bot = new Telegraf(TOKEN);
