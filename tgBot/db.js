@@ -1,4 +1,4 @@
-import fs from 'fs';
+const { fs } = require('fs');
 
 let dataActualUser = fs.readFileSync('tmp/dataActualUser.json', 'utf8');
 let dataAllUsers = fs.readFileSync('tmp/dataAllUser.json', 'utf8');

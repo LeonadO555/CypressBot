@@ -1,4 +1,4 @@
-import { Markup } from 'telegraf';
+const { Markup } = require('telegraf');
 
 export function getMainMenu() {
   return Markup.keyboard([
