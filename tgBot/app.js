@@ -1,4 +1,4 @@
-import express from 'express';
+const express = require('express');
 import { PORT, TOKEN } from './config.js';
 import { Telegraf } from 'telegraf';
 import { getMainMenu } from './keyboards.js';
