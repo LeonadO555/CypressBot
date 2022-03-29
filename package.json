@@ -2,7 +2,7 @@
   "name": "debug_u_bot",
   "version": "1.0.0",
   "description": "",
-  "main": " tgBot/app.js",
+  "main": "tgBot/app.js",
   "scripts": {
     "test": "nodemon tgBot/app.js"
   },
