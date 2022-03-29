@@ -1,11 +1,10 @@
 const express = require('express');
-const { PORT, TOKEN } = require('./config.js');
 const { Telegraf } = require('telegraf');
 const { getMainMenu } = require('./keyboards.js');
 const { getActualUser, getAllUsers } = require('./db.js');
 
 const app = express();
-const bot = new Telegraf(TOKEN);
+const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
 
 bot.start((ctx) => {
   ctx.reply('Yo guys', getMainMenu());
@@ -43,4 +42,4 @@ bot.hears('LogBot', (ctx) => {
 
 bot.launch();
 
-app.listen(PORT, () => console.log(`My server is running on port ${PORT}`));
+app.listen(3000, () => console.log(`My server is running on port ${3000}`));
