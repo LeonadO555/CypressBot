@@ -53,7 +53,7 @@ const checkAndTakeEat = () => {
   });
   const arr = [];
   AllCheck(arr);
-  cy.writeFile('~/tmp/dataActualUser.json', arr);
+  cy.writeFile('MacintoshHD/Users/leo/Downloads/dojob-main/tmp/dataActualUser.json', arr);
 };
 const checkDusk = (arr) => {
   cy.get('div')
