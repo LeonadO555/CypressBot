@@ -1,5 +1,5 @@
 const express = require('express');
-import { PORT, TOKEN } from './config.js';
+const { PORT, TOKEN } = require('./config.js');
 import { Telegraf } from 'telegraf';
 import { getMainMenu } from './keyboards.js';
 import { getActualUser, getAllUsers } from './db.js';
