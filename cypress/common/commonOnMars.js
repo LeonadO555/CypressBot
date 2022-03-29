@@ -1,19 +1,24 @@
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
+  cy.task('log', 'I followed the link');
   loginUser(username, password);
   cy.task('log', logUser);
   checkAndTakeEat();
+  cy.task('log', 'I have passed the stage of taking food');
   AllCheck(arr);
+  cy.task('log', 'I checked the stamina, dusk, username');
   clickButtonTransferJob();
+  cy.task('log', 'I click Do Job button');
   checkAndDoJob();
 };
 
 const linkToJob = () => {
   cy.clearCookies();
-  cy.visit('https://app.milliononmars.io/jobs');
+  cy.visit('https://milliononmars.io/login');
 };
 
 const loginUser = (userName, userPassword) => {
+  cy.task('log', 'I not logout');
   cy.contains('Login').should('be.visible').click();
   cy.get('input[name="email"]').should('be.visible').type(userName).should('have.value', userName);
   cy.get('input[name="password"]').should('be.visible').type(userPassword).should('have.value', userPassword);
@@ -26,6 +31,7 @@ const clickCloseButton = () => {
     .get('button[type="button"]')
     .get('[aria-hidden="true"]')
     .click({ force: true, multiple: true });
+  cy.task('log', 'I closed all button');
 };
 
 const checkAndTakeEat = () => {
@@ -245,13 +251,9 @@ const clickCompleteJobOrLogout = () => {
               });
             }
             clickMenuAndLogout();
-            cy.task('log', 'I logout');
-            cy.wait(5000);
           });
       } else {
         clickMenuAndLogout();
-        cy.task('log', 'I logout');
-        cy.wait(5000);
       }
     });
 };
@@ -260,4 +262,8 @@ const clickMenuAndLogout = () => {
   cy.get('button.MuiButtonBase-root:nth-child(6) > span:nth-child(1) > svg:nth-child(1)').click();
   cy.wait(500);
   cy.contains('Logout').click();
+  cy.contains('Play Now').should('be.visible');
+  cy.contains('Whitepaper').should('be.visible');
+  cy.contains('Company').should('be.visible');
+  cy.task('log', 'I logout');
 };
