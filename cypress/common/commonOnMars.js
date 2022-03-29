@@ -63,7 +63,6 @@ const checkDusk = (arr) => {
     .then(parseInt)
     .then((numberDusk) => {
       arr.push(`Dusk: ${numberDusk}`);
-      cy.task('log', `Dusk ${numberDusk}`);
     });
 };
 
@@ -75,7 +74,6 @@ const checkUser = (arr) => {
     .invoke('text')
     .then((userName) => {
       arr.push(`User: ${userName}`);
-      cy.task('log', `${userName}`);
     });
 };
 
