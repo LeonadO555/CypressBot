@@ -1,14 +1,18 @@
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
+
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
-  cy.task('log', 'I followed the link');
+  cy.task('log', 'I FOLLOWED THE LINK');
   loginUser(username, password);
   cy.task('log', logUser);
   checkAndTakeEat();
-  cy.task('log', 'I have passed the stage of taking food');
+  cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
   AllCheck(arr);
-  cy.task('log', 'I checked the stamina, dusk, username');
+  cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
   clickButtonTransferJob();
-  cy.task('log', 'I click Do Job button');
+  cy.task('log', 'I CLICK DO JOB BUTTON');
   checkAndDoJob();
 };
 
@@ -18,7 +22,6 @@ const linkToJob = () => {
 };
 
 const loginUser = (userName, userPassword) => {
-  cy.task('log', 'I not logout');
   cy.contains('Login').should('be.visible').click();
   cy.get('input[name="email"]').should('be.visible').type(userName).should('have.value', userName);
   cy.get('input[name="password"]').should('be.visible').type(userPassword).should('have.value', userPassword);
@@ -54,7 +57,7 @@ const checkAndTakeEat = () => {
   });
   const arr = [];
   AllCheck(arr);
-  cy.writeFile('dataActualUser.json', arr);
+  cy.writeFile('/Users/leo/Downloads/dojob-main/tmp/dataActualUser.json', arr);
 };
 const checkDusk = (arr) => {
   cy.get('div')
@@ -265,5 +268,5 @@ const clickMenuAndLogout = () => {
   cy.contains('Play Now').should('be.visible');
   cy.contains('Whitepaper').should('be.visible');
   cy.contains('Company').should('be.visible');
-  cy.task('log', 'I logout');
+  cy.task('log', 'I LOGOUT');
 };
