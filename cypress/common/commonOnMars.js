@@ -238,12 +238,15 @@ const clickCompleteJobOrLogout = () => {
             for (let i = 0; i < value; i++) {
               cy.get('body').then(($complete) => {
                 const checkButton = $complete.find('button[aria-label="add"]');
-                if (!checkButton.attr('disabled')) {
-                  cy.get('button[aria-label="add"]').click({ multiple: true, force: true }).wait(5000);
-                  cy.task('log', 'Click Complete job');
-                } else {
-                  cy.log('lol');
-                  cy.task('log', 'Button complete disable');
+                if (!checkButton) {
+                  if (!checkButton.attr('disabled')) {
+                    cy.get('button[aria-label="add"]').click({ multiple: true, force: true }).wait(5000);
+                    cy.task('log', 'Click Complete job');
+                  } else {
+                    cy.log('lol');
+                    cy.task('log', 'Button complete disable');
+                  }
+                  return;
                 }
               });
             }
