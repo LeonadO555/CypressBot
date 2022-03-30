@@ -8,7 +8,7 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   AllCheck(arr);
   cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
   clickButtonTransferJob();
-  cy.task('log', 'I CLICK DO JOB BUTTON');
+  cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
   checkAndDoJob();
 };
 
@@ -30,7 +30,7 @@ const clickCloseButton = () => {
     .get('button[type="button"]')
     .get('[aria-hidden="true"]')
     .click({ force: true, multiple: true });
-  cy.task('log', 'I closed all button');
+  cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
 };
 
 const checkAndTakeEat = () => {
@@ -216,8 +216,9 @@ const fixBugStamina = () => {
 };
 
 const clickCompleteJobOrLogout = () => {
-  cy.wait(2000);
-  cy.get('a[href="/jobs/worker"]')
+  const buttonCompleteJob = cy.get('a[href="/jobs/worker"]');
+  buttonCompleteJob.should('be.visible');
+  buttonCompleteJob
     .then(($a) => {
       const item = $a.find('.MuiBadge-anchorOriginTopLeftRectangle');
       if (item.length > 0) {
@@ -233,7 +234,7 @@ const clickCompleteJobOrLogout = () => {
           .invoke('text')
           .then((text) => +text)
           .then((value) => {
-            cy.get('a[href="/jobs/worker"]').click();
+            buttonCompleteJob.click();
             cy.contains('Worked Jobs').should('be.visible');
             for (let i = 0; i < value; i++) {
               cy.get('body').then(($complete) => {
@@ -247,6 +248,7 @@ const clickCompleteJobOrLogout = () => {
                     cy.task('log', 'Button complete disable');
                   }
                 } else {
+                  cy.task('log', 'I skip cycle by click COMPLETE');
                   return;
                 }
               });
