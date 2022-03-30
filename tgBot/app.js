@@ -15,8 +15,8 @@ function getMainMenu() {
   ]).resize();
 }
 
-let dataActualUser = fs.readFileSync('MacintoshHD/Users/leo/Downloads/dojob-main/tmp/dataActualUser.json', 'utf8');
-let dataAllUsers = fs.readFileSync('MacintoshHD/Users/leo/Downloads/dojob-main/tmp/dataAllUser.json', 'utf8');
+let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
+let dataAllUsers = fs.readFileSync('/tmp/dataAllUser.json', 'utf8');
 function getActualUser() {
   return new Promise((resolve) => {
     setTimeout(() => {
