@@ -1,7 +1,7 @@
 const express = require('express');
 const { Telegraf } = require('telegraf');
 const { Markup } = require('telegraf');
-const { fs } = require('fs');
+const fs = require('fs');
 
 const app = express();
 const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
