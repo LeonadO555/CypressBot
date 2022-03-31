@@ -52,8 +52,9 @@ const checkAndTakeEat = () => {
     }
   });
   const arr = [];
+  const stringData = ' '.join(arr);
   AllCheck(arr);
-  cy.writeFile('/tmp/dataActualUser.json', arr);
+  cy.writeFile('/tmp/dataActualUser.json', stringData);
 };
 const checkDusk = (arr) => {
   cy.get('div')
