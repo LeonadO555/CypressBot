@@ -39,11 +39,13 @@ bot.hears('Actual user viewing data', async (ctx) => {
   const data = await getActualUser();
   let result = '';
   result = result + `${data}\n`;
-  let date = new Date();
 
-  ctx.replyWithPhoto('https://sysblok.ru/wp-content/uploads/2020/09/anekdoty.jpg', {
-    caption: `${date}\n` + 'List actual user data:\n\n' + `${result}`,
-  });
+  ctx.replyWithPhoto(
+    'https://cdn.cloudflare.steamstatic.com/steamcommun…9770/69b21ff730be7c4eff319d0d0e3691a249574e12.jpg',
+    {
+      caption: 'List actual user data:\n\n' + `${result}`,
+    }
+  );
 });
 
 bot.hears('All users viewing data', async (ctx) => {
@@ -51,9 +53,12 @@ bot.hears('All users viewing data', async (ctx) => {
   let result = '';
   result = result + `${data}\n`;
   let date = new Date();
-  ctx.replyWithPhoto('https://proza.ru/pics/2019/11/18/834.jpg', {
-    caption: `${date}\n` + 'List all users data:\n\n' + `${result}`,
-  });
+  ctx.replyWithPhoto(
+    'https://cdn.cloudflare.steamstatic.com/steamcommun…9770/69b21ff730be7c4eff319d0d0e3691a249574e12.jpg',
+    {
+      caption: `${date}\n` + 'List all users data:\n\n' + `${result}`,
+    }
+  );
 });
 bot.hears('Button for WebMonkey', (ctx) => {
   ctx.replyWithPhoto('https://ebanoe-it.ru/wp-content/uploads/2021/07/makaka.jpg', {
