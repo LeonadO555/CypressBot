@@ -41,7 +41,7 @@ bot.hears('Actual user viewing data', async (ctx) => {
   result = result + `${data}\n`;
 
   ctx.replyWithPhoto(
-    'https://cdn.cloudflare.steamstatic.com/steamcommun…9770/69b21ff730be7c4eff319d0d0e3691a249574e12.jpg',
+    'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1509770/69b21ff730be7c4eff319d0d0e3691a249574e12.jpg',
     {
       caption: 'List actual user data:\n\n' + `${result}`,
     }
@@ -54,7 +54,7 @@ bot.hears('All users viewing data', async (ctx) => {
   result = result + `${data}\n`;
   let date = new Date();
   ctx.replyWithPhoto(
-    'https://cdn.cloudflare.steamstatic.com/steamcommun…9770/69b21ff730be7c4eff319d0d0e3691a249574e12.jpg',
+    'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1509770/69b21ff730be7c4eff319d0d0e3691a249574e12.jpg',
     {
       caption: `${date}\n` + 'List all users data:\n\n' + `${result}`,
     }
