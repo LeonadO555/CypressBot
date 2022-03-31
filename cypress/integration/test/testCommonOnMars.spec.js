@@ -44,6 +44,7 @@ describe('DO JOB', () => {
   };
   it('Click Do Job button and wait 1 minute', () => {
     const arr = [];
+    const stringData = arr.join(' ');
     onMarsCommon(env.USERNAME_LENA_1, env.PASSWORD_LENA_1, arr, 'USERNAME 1');
     onMarsCommon(env.USERNAME_LEO_1, env.PASSWORD_LEO_1, arr, 'USERNAME 2');
     onMarsCommon(env.USERNAME_LEO_2, env.PASSWORD_LEO_2, arr, 'USERNAME 3');
