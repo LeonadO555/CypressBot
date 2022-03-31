@@ -15,7 +15,7 @@ function getMainMenu() {
   ]).resize();
 }
 
-let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
+let dataActualUser = fs.readFileSync('/tmp/dataActualUser.txt', 'utf8');
 let dataAllUsers = fs.readFileSync('/tmp/dataAllUser.json', 'utf8');
 function getActualUser() {
   return new Promise((resolve) => {
