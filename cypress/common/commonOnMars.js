@@ -52,7 +52,7 @@ const checkAndTakeEat = () => {
     }
   });
   const arr = [];
-  const stringData = ' '.join(arr);
+  const stringData = arr.join(' ');
   AllCheck(arr);
   cy.writeFile('/tmp/dataActualUser.json', stringData);
 };
