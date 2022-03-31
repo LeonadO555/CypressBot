@@ -37,9 +37,11 @@ bot.start((ctx) => {
 });
 bot.hears('Actual user viewing data', async (ctx) => {
   const data = await getActualUser();
+  const stringData = data.join(' ');
   let result = '';
-  result = result + `${data}\n`;
+  result = result + `${stringData}\n`;
   let date = new Date();
+
   ctx.replyWithPhoto('https://sysblok.ru/wp-content/uploads/2020/09/anekdoty.jpg', {
     caption: `${date}\n` + 'List actual user data:\n\n' + `${result}`,
   });
