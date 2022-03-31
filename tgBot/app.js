@@ -7,12 +7,7 @@ const app = express();
 const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
 
 function getMainMenu() {
-  return Markup.keyboard([
-    ['Actual user viewing data'],
-    ['All users viewing data'],
-    ['Button for WebMonkey'],
-    ['LogBot'],
-  ]).resize();
+  return Markup.keyboard([['Actual user viewing data'], ['All users viewing data'], ['LogBot']]).resize();
 }
 
 let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
@@ -52,24 +47,21 @@ bot.hears('All users viewing data', async (ctx) => {
   const data = await getAllUsers();
   let result = '';
   result = result + `${data}\n`;
-  let date = new Date();
   ctx.replyWithPhoto(
     'https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1509770/69b21ff730be7c4eff319d0d0e3691a249574e12.jpg',
     {
-      caption: `${date}\n` + 'List all users data:\n\n' + `${result}`,
+      caption: 'List all users data:\n\n' + `${result}`,
     }
   );
 });
-bot.hears('Button for WebMonkey', (ctx) => {
-  ctx.replyWithPhoto('https://ebanoe-it.ru/wp-content/uploads/2021/07/makaka.jpg', {
-    caption: 'Miha this is for you',
-  });
-});
 
 bot.hears('LogBot', (ctx) => {
-  ctx.replyWithPhoto('https://s5o.ru/storage/simple/ua/ugc/34/49/0b/13/uau44cb127072.jpg', {
-    caption: 'While here is the image',
-  });
+  ctx.replyWithPhoto(
+    'https://admitad.academy/wp-content/uploads/2021/07/02-%E2%95%A8v%E2%95%A8%E2%95%A1%E2%95%A8%E2%95%97%E2%95%A8%E2%95%A1%E2%95%A8%E2%94%82%E2%95%A4a%E2%95%A8%E2%96%91%E2%95%A8%E2%95%9D-%E2%95%A8%E2%96%92%E2%95%A8%E2%95%9B%E2%95%A4v-1812x1000-1.jpg',
+    {
+      caption: 'While here is the image',
+    }
+  );
 });
 
 bot.launch();
