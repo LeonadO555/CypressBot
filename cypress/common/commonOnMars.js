@@ -1,15 +1,23 @@
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
   cy.task('log', 'I FOLLOWED THE LINK');
-  loginUser(username, password);
-  cy.task('log', logUser);
-  checkAndTakeEat();
-  cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
-  AllCheck(arr);
-  cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
-  clickButtonTransferJob();
-  cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
-  checkAndDoJob();
+  cy.get('body').then(($maintenance) => {
+    const itemName = $maintenance.find('#__next > main').find('> div > h3');
+    if (itemName.text().includes('MAINTENANCE IN PROGRESS')) {
+      cy.log('lol');
+      cy.task('log', 'MAINTENANCE IN PROGRESS :(');
+    } else {
+      loginUser(username, password);
+      cy.task('log', logUser);
+      checkAndTakeEat();
+      cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
+      AllCheck(arr);
+      cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
+      clickButtonTransferJob();
+      cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
+      checkAndDoJob();
+    }
+  });
 };
 
 const linkToJob = () => {
