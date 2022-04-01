@@ -241,6 +241,7 @@ const clickCompleteJobOrLogout = () => {
           .invoke('text')
           .then((text) => +text)
           .then((value) => {
+            cy.wait(2000);
             buttonCompleteJob.click();
             cy.contains('Worked Jobs').should('be.visible');
             for (let i = 0; i < value; i++) {
