@@ -11,7 +11,9 @@ export const onMarsCommon = (username, password, arr, logUser) => {
       cy.task('log', logUser);
       checkAndTakeEat();
       cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
+      const arr = [];
       AllCheck(arr);
+      cy.writeFile('/tmp/dataActualUser.json', arr);
       cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
       clickButtonTransferJob();
       cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
@@ -59,9 +61,6 @@ const checkAndTakeEat = () => {
       });
     }
   });
-  const arr = [];
-  AllCheck(arr);
-  cy.writeFile('/tmp/dataActualUser.json', arr);
 };
 const checkDusk = (arr) => {
   cy.get('div')
