@@ -11,7 +11,7 @@ function getMainMenu() {
 }
 
 let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
-let dataLog = fs.readFileSync('/tmp/dataAllUser.json', 'utf8');
+let dataLog = fs.readFileSync('$JENKINS_HOME/workspace/path/to/job/console.log', 'utf8');
 function getAllUsers() {
   return new Promise((resolve) => {
     setTimeout(() => {
