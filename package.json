@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "cypress": "^9.4.1",
+    "dotenv": "^16.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.3",
     "node-telegram-bot-api": "0.56.0",
@@ -19,8 +20,8 @@
   },
   "devDependencies": {
     "cypress-pipe": "^2.0.0",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
-    "task": "^1.3.2",
-    "nodemon": "^2.0.15"
+    "task": "^1.3.2"
   }
 }

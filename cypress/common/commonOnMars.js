@@ -197,8 +197,8 @@ const checkViewsConfirm = () => {
         clickConfirmButton();
         fixBugStamina();
       } else {
-        cy.log('ok');
         cy.task('log', 'I not click Confirm');
+        cy.log('ok');
       }
     }
   });
@@ -223,9 +223,9 @@ const fixBugStamina = () => {
 };
 
 const clickCompleteJobOrLogout = () => {
-  const buttonCompleteJob = cy.get('a[href="/jobs/worker"]');
-  buttonCompleteJob.should('be.visible');
-  buttonCompleteJob
+  cy.wait(2000);
+  cy.get('a[href="/jobs/worker"]').should('be.visible');
+  cy.get('a[href="/jobs/worker"]')
     .then(($a) => {
       const item = $a.find('.MuiBadge-anchorOriginTopLeftRectangle');
       if (item.length > 0) {
@@ -241,8 +241,7 @@ const clickCompleteJobOrLogout = () => {
           .invoke('text')
           .then((text) => +text)
           .then((value) => {
-            cy.wait(2000);
-            buttonCompleteJob.click();
+            cy.contains('Work Orders').click();
             cy.contains('Worked Jobs').should('be.visible');
             for (let i = 0; i < value; i++) {
               cy.get('body').then(($complete) => {
