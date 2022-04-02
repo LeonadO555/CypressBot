@@ -26,7 +26,6 @@ describe('DO JOB', () => {
     cy.writeFile('/tmp/dataActualUser.json', arr);
     onMarsCommon(Cypress.env('user_8'), Cypress.env('pas_8'), arr, 'USERNAME 8');
     cy.writeFile('/tmp/dataActualUser.json', arr);
-    cy.writeFile('/tmp/dataAllUser.json', arr);
     onMarsCommon(Cypress.env('user_9'), Cypress.env('pas_9'), arr, 'USERNAME 9');
     cy.writeFile('/tmp/dataActualUser.json', arr);
     onMarsCommon(Cypress.env('user_10'), Cypress.env('pas_10'), arr, 'USERNAME 10');
@@ -43,6 +42,5 @@ describe('DO JOB', () => {
     cy.writeFile('/tmp/dataActualUser.json', arr);
     onMarsCommon(Cypress.env('user_16'), Cypress.env('pas_16'), arr, 'USERNAME 16');
     cy.writeFile('/tmp/dataActualUser.json', arr);
-    cy.writeFile('/tmp/dataAllUser.json', arr);
   });
 });
