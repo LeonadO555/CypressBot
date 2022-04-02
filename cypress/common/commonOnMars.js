@@ -18,7 +18,7 @@ export const onMarsCommon = (username, password, arr, logUser) => {
       clickButtonTransferJob();
       cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
       checkAndDoJob();
-      cy.writeFile('/tmp/dataAllUser.json', log);
+      cy.writeFile('/tmp/dataAllUser.json', value);
     }
   });
 };
