@@ -11,10 +11,7 @@ function getMainMenu() {
 }
 
 let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
-let dataLog = fs.readFileSync(
-  'http://e7290ed965b5.sn.mynetname.net:8888/job/runme/workspace/path/to/job/console.log',
-  'utf8'
-);
+let dataLog = fs.readFileSync('http://e7290ed965b5.sn.mynetname.net:8888/job/runme/76/consoleText', 'utf8');
 function getAllUsers() {
   return new Promise((resolve) => {
     setTimeout(() => {
