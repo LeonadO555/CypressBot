@@ -11,7 +11,7 @@ function getMainMenu() {
 }
 
 let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
-let dataLog = fs.readFileSync('/tmp/log.txt', 'utf8');
+// let dataLog = fs.readFileSync('/tmp/log.txt', 'utf8');
 function getAllUsers() {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -20,13 +20,13 @@ function getAllUsers() {
   });
 }
 
-function getLog() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(dataLog);
-    }, 500);
-  });
-}
+// function getLog() {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve(dataLog);
+//     }, 500);
+//   });
+// }
 
 bot.start((ctx) => {
   ctx.reply('Yo guys', getMainMenu());
@@ -44,17 +44,17 @@ bot.hears('All users viewing data', async (ctx) => {
   );
 });
 
-bot.hears('LogBot', async (ctx) => {
-  const data = await getLog();
-  let result = '';
-  result = result + `${data}\n`;
-  ctx.replyWithPhoto(
-    'https://admitad.academy/wp-content/uploads/2021/07/02-%E2%95%A8v%E2%95%A8%E2%95%A1%E2%95%A8%E2%95%97%E2%95%A8%E2%95%A1%E2%95%A8%E2%94%82%E2%95%A4a%E2%95%A8%E2%96%91%E2%95%A8%E2%95%9D-%E2%95%A8%E2%96%92%E2%95%A8%E2%95%9B%E2%95%A4v-1812x1000-1.jpg',
-    {
-      caption: 'List log bot:\n\n' + `${result}`,
-    }
-  );
-});
+// bot.hears('LogBot', async (ctx) => {
+//   const data = await getLog();
+//   let result = '';
+//   result = result + `${data}\n`;
+//   ctx.replyWithPhoto(
+//     'https://admitad.academy/wp-content/uploads/2021/07/02-%E2%95%A8v%E2%95%A8%E2%95%A1%E2%95%A8%E2%95%97%E2%95%A8%E2%95%A1%E2%95%A8%E2%94%82%E2%95%A4a%E2%95%A8%E2%96%91%E2%95%A8%E2%95%9D-%E2%95%A8%E2%96%92%E2%95%A8%E2%95%9B%E2%95%A4v-1812x1000-1.jpg',
+//     {
+//       caption: 'List log bot:\n\n' + `${result}`,
+//     }
+//   );
+// });
 
 bot.launch();
 
