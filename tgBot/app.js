@@ -2,6 +2,7 @@ const express = require('express');
 const { Telegraf } = require('telegraf');
 const { Markup } = require('telegraf');
 const fs = require('fs');
+const { log } = require('task/src/log');
 
 const app = express();
 const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
@@ -9,9 +10,9 @@ const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
 function getMainMenu() {
   return Markup.keyboard([['All users viewing data'], ['LogBot']]).resize();
 }
-
+cy.writeFile('/tmp/dataAllUser.json', log);
 let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
-let dataLog = fs.readFileSync('task/src/log', 'utf8');
+let dataLog = fs.readFileSync('/tmp/dataAllUser.json', 'utf8');
 function getAllUsers() {
   return new Promise((resolve) => {
     setTimeout(() => {
