@@ -1,3 +1,5 @@
+import { log } from 'task/src/log';
+
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
   cy.task('log', 'I FOLLOWED THE LINK');
@@ -16,6 +18,7 @@ export const onMarsCommon = (username, password, arr, logUser) => {
       clickButtonTransferJob();
       cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
       checkAndDoJob();
+      cy.writeFile('/tmp/dataAllUser.json', log);
     }
   });
 };
