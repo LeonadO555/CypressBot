@@ -84,7 +84,7 @@ const checkUser = (arr) => {
 
 const checkStamina = (arr) => {
   cy.get('div[title="Stamina"]')
-    .get('div:nth-child(5) > span')
+    .get('div:nth-child(5) > span:nth-child(2)')
     .invoke('text')
     .then(parseInt)
     .then((numberStamina) => {
@@ -150,7 +150,7 @@ const clickButtonTransferJob = () => {
 
 const checkAndDoJob = () => {
   cy.get('div[title="Stamina"]')
-    .get('div:nth-child(5) > span')
+    .get('div:nth-child(5) > span:nth-child(2)')
     .invoke('text')
     .then(parseInt)
     .then((numberStamina) => {
