@@ -7,7 +7,7 @@ const app = express();
 const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
 
 function getMainMenu() {
-  return Markup.keyboard([['All users viewing data']]).resize();
+  return Markup.keyboard([['All users viewing data'], ['All users viewing data part two']]).resize();
 }
 
 let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
