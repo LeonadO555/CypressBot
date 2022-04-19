@@ -129,18 +129,14 @@ const ifNoDisabledEatRation = () => {
   cy.wait(1000);
   cy.get('div[role="dialog"]')
     .get('button[type=button]')
-    .eq(2)
+    .eq(3)
     .should('be.visible')
     .click({ multiple: true, force: true });
   cy.task('log', 'I catch Eat Ration');
 };
 
 const ifDisabledEatRation = () => {
-  cy.get('div[role="dialog"]')
-    .get('button[type=button]')
-    .eq(2)
-    .should('be.visible')
-    .click({ multiple: true, force: true });
+  cy.get('div[role="dialog"]').get('button[type=button]').eq(3).should('be.visible').click({ multiple: true });
   cy.task('log', 'I no catch Eat Ration');
 };
 
