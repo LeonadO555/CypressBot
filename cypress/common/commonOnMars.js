@@ -23,7 +23,8 @@ export const onMarsCommon = (username, password, arr, logUser) => {
 
 const linkToJob = () => {
   cy.clearCookies();
-  cy.visit('https://milliononmars.io/login');
+  cy.visit('https://app.milliononmars.io');
+  cy.contains('Play Now').click();
 };
 
 const loginUser = (userName, userPassword) => {
@@ -51,7 +52,7 @@ const checkAndTakeEat = () => {
     } else {
       ifNotClaim();
       cy.get('div[role="dialog"]').then(($eatRation) => {
-        const checkEatRation = $eatRation.find('tr.MuiTableRow-root:nth-child(4)').find('button[aria-label="add"]');
+        const checkEatRation = $eatRation.find('tr.MuiTableRow-root:nth-child(5)').find('button[aria-label="add"]');
         if (!checkEatRation.attr('disabled')) {
           ifNoDisabledEatRation();
         } else {
@@ -98,6 +99,9 @@ const AllCheck = (arr) => {
   checkDusk(arr);
   checkStamina(arr);
 };
+const clickCloseButtonAction = () => {
+  cy.get('div[role="dialog"]').get('button[type=button]').eq(4).should('be.visible').click({ multiple: true });
+};
 
 const ifClaim = () => {
   cy.get('div[role="dialog"]').find('button[type="button"]').find('>span').contains('Claim').click();
@@ -109,11 +113,7 @@ const ifClaim = () => {
   cy.task('log', 'Click Eat Ration');
   cy.contains('Confirm').should('be.visible').click();
   cy.wait(1000);
-  cy.get('div[role="dialog"]')
-    .get('button[type=button]')
-    .eq(3)
-    .should('be.visible')
-    .click({ multiple: true, force: true });
+  clickCloseButtonAction();
   cy.task('log', 'I catch Eat Ration');
 };
 
@@ -128,16 +128,12 @@ const ifNoDisabledEatRation = () => {
   cy.task('log', 'click Eat Ration');
   cy.contains('Confirm').should('be.visible').click();
   cy.wait(1000);
-  cy.get('div[role="dialog"]')
-    .get('button[type=button]')
-    .eq(4)
-    .should('be.visible')
-    .click({ multiple: true, force: true });
+  clickCloseButtonAction();
   cy.task('log', 'I catch Eat Ration');
 };
 
 const ifDisabledEatRation = () => {
-  cy.get('div[role="dialog"]').get('button[type=button]').eq(4).should('be.visible').click({ multiple: true });
+  clickCloseButtonAction();
   cy.task('log', 'I no catch Eat Ration');
 };
 
