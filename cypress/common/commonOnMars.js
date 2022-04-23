@@ -1,24 +1,15 @@
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
-  cy.task('log', 'I FOLLOWED THE LINK');
-  cy.get('body').then(($maintenance) => {
-    const itemName = $maintenance.find('#__next > main').find('> div > h3');
-    if (itemName.text().includes('MAINTENANCE IN PROGRESS')) {
-      cy.log('lol');
-      cy.task('log', 'MAINTENANCE IN PROGRESS :(');
-    } else {
-      loginUser(username, password);
-      cy.task('log', logUser);
-      checkAndTakeEat();
-      cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
-      AllCheck(arr);
-      cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
-      // clickButtonTransferJob();
-      // cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
-      clickMenuAndLogout();
-      // checkAndDoJob();
-    }
-  });
+  logoutIfActiveSessionNoActualUserAndLoginActualUser(username, password);
+  cy.task('log', logUser);
+  checkAndTakeEat();
+  cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
+  AllCheck(arr);
+  cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
+  // clickButtonTransferJob();
+  // cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
+  clickMenuAndLogout();
+  // checkAndDoJob()
 };
 
 const linkToJob = () => {
@@ -43,10 +34,25 @@ const clickCloseButton = () => {
   cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
 };
 
+const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password) => {
+  cy.wait(7000);
+  cy.get('body').then(($dialogMainPage) => {
+    const dialogMainPage = $dialogMainPage.find('div:nth-child(2)');
+    if (dialogMainPage.hasClass('modal-content')) {
+      clickCloseButton();
+      clickMenuAndLogout();
+      linkToJob();
+      loginUser(username, password);
+    } else {
+      loginUser(username, password);
+    }
+  });
+};
+
 const checkAndTakeEat = () => {
-  cy.wait(15000);
-  cy.get('div[role="dialog"]').then(($claimButton) => {
-    const item = $claimButton.find('button[type="button"]').find('>span');
+  clickCloseButton();
+  cy.get('body').then(($claimButton) => {
+    const item = $claimButton.find('div[role="dialog"]').find('button[type="button"]').find('>span');
     if (item.text().includes('Claim')) {
       ifClaim();
     } else {
@@ -106,7 +112,6 @@ const clickCloseButtonAction = () => {
 const ifClaim = () => {
   cy.get('div[role="dialog"]').find('button[type="button"]').find('>span').contains('Claim').click();
   cy.task('log', 'Click Claim');
-  clickCloseButton();
   cy.contains('Actions').should('be.visible').click();
   cy.task('log', 'Click Actions');
   cy.get('div[role="dialog"]').get('button[type=button]').contains('Eat Ration').should('be.visible').click();
@@ -118,7 +123,6 @@ const ifClaim = () => {
 };
 
 const ifNotClaim = () => {
-  clickCloseButton();
   cy.task('log', 'I not click Claim');
   cy.contains('Actions').should('be.visible').click();
 };
