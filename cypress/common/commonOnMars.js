@@ -13,16 +13,17 @@ export const onMarsCommon = (username, password, arr, logUser) => {
       cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
       AllCheck(arr);
       cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
-      clickButtonTransferJob();
-      cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
-      checkAndDoJob();
+      // clickButtonTransferJob();
+      // cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
+      clickMenuAndLogout();
+      // checkAndDoJob();
     }
   });
 };
 
 const linkToJob = () => {
   cy.clearCookies();
-  cy.visit('https://app.milliononmars.io/jobs');
+  cy.visit('https://app.milliononmars.io/login');
 };
 
 const loginUser = (userName, userPassword) => {
@@ -129,14 +130,14 @@ const ifNoDisabledEatRation = () => {
   cy.wait(1000);
   cy.get('div[role="dialog"]')
     .get('button[type=button]')
-    .eq(3)
+    .eq(4)
     .should('be.visible')
     .click({ multiple: true, force: true });
   cy.task('log', 'I catch Eat Ration');
 };
 
 const ifDisabledEatRation = () => {
-  cy.get('div[role="dialog"]').get('button[type=button]').eq(3).should('be.visible').click({ multiple: true });
+  cy.get('div[role="dialog"]').get('button[type=button]').eq(4).should('be.visible').click({ multiple: true });
   cy.task('log', 'I no catch Eat Ration');
 };
 
