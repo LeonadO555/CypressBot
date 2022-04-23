@@ -23,7 +23,7 @@ export const onMarsCommon = (username, password, arr, logUser) => {
 
 const linkToJob = () => {
   cy.clearCookies();
-  cy.visit('https://app.milliononmars.io/login');
+  cy.visit('https://milliononmars.io/login');
 };
 
 const loginUser = (userName, userPassword) => {
