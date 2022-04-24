@@ -4,12 +4,13 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   cy.task('log', logUser);
   checkAndTakeEat();
   cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
+  checkCompleteWorkAndTookDusk();
+  cy.task('log', 'I TOOK DUSK FROM INBOX');
   AllCheck(arr);
   cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
-  // clickButtonTransferJob();
-  // cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
-  clickMenuAndLogout();
-  // checkAndDoJob()
+  clickButtonTransferJob();
+  cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
+  tookWork();
 };
 
 const linkToJob = () => {
@@ -44,12 +45,14 @@ const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password)
       linkToJob();
       loginUser(username, password);
     } else {
+      linkToJob();
       loginUser(username, password);
     }
   });
 };
 
 const checkAndTakeEat = () => {
+  cy.wait(5000);
   clickCloseButton();
   cy.get('body').then(($claimButton) => {
     const item = $claimButton.find('div[role="dialog"]').find('button[type="button"]').find('>span');
@@ -105,8 +108,13 @@ const AllCheck = (arr) => {
   checkDusk(arr);
   checkStamina(arr);
 };
-const clickCloseButtonAction = () => {
+const clickCloseDialog = () => {
   cy.get('div[role="dialog"]').get('button[type=button]').eq(4).should('be.visible').click({ multiple: true });
+};
+
+const clickConfirmButton = () => {
+  cy.contains('Confirm').should('be.visible').click();
+  cy.task('log', 'I click Confirm');
 };
 
 const ifClaim = () => {
@@ -116,9 +124,9 @@ const ifClaim = () => {
   cy.task('log', 'Click Actions');
   cy.get('div[role="dialog"]').get('button[type=button]').contains('Eat Ration').should('be.visible').click();
   cy.task('log', 'Click Eat Ration');
-  cy.contains('Confirm').should('be.visible').click();
+  clickConfirmButton();
   cy.wait(1000);
-  clickCloseButtonAction();
+  clickCloseDialog();
   cy.task('log', 'I catch Eat Ration');
 };
 
@@ -130,22 +138,23 @@ const ifNotClaim = () => {
 const ifNoDisabledEatRation = () => {
   cy.get('button[aria-label="add"]').contains('Eat Ration').should('be.visible').click();
   cy.task('log', 'click Eat Ration');
-  cy.contains('Confirm').should('be.visible').click();
+  clickConfirmButton();
   cy.wait(1000);
-  clickCloseButtonAction();
+  clickCloseDialog();
   cy.task('log', 'I catch Eat Ration');
 };
 
 const ifDisabledEatRation = () => {
-  clickCloseButtonAction();
+  clickCloseDialog();
   cy.task('log', 'I no catch Eat Ration');
 };
 
 const clickButtonTransferJob = () => {
-  cy.get('a.MuiButton-root:nth-child(2)').click().should('be.visible');
+  cy.get('button:nth-child(2)').should('be.visible');
+  cy.get('button:nth-child(2)').click();
 };
 
-const checkAndDoJob = () => {
+const tookWork = () => {
   cy.get('div[title="Stamina"]')
     .get('div:nth-child(5) > span:nth-child(2)')
     .invoke('text')
@@ -153,114 +162,72 @@ const checkAndDoJob = () => {
     .then((numberStamina) => {
       if (numberStamina === 0) {
         cy.task('log', `Stamina ${numberStamina}`);
-        clickCompleteJobOrLogout();
+        clickMenuAndLogout();
         return;
       }
 
       cy.task('log', `Stamina ${numberStamina}`);
-      checkViewsDoJob();
-      checkAndDoJob();
+      findWork();
+      tookWork();
     });
 };
 
-const checkViewsDoJob = () => {
-  const doJob = cy.get('body', { timeout: 100000000 });
-  doJob.then(($button) => {
-    const checkButtonEnabled = $button.find('button[aria-label="add"]');
-    if (!checkButtonEnabled.attr('disabled')) {
-      clickDoJobButton();
-      checkViewsConfirm();
+const findWork = () => {
+  cy.contains('Find Work').should('be.visible');
+  itemFindWork();
+};
+
+const itemFindWork = () => {
+  const listItem = [0, 1, 2, 3, 4, 5, 6, 7];
+  for (const name of listItem) {
+    cy.get('.content')
+      .find('.item')
+      .eq(name)
+      .find('.item-header')
+      .find('.item-available')
+      .find('.value')
+      .invoke('text')
+      .then((numberAvailable) => {
+        cy.task('log', `Available work ${numberAvailable}`);
+        cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
+        clickPostedWork();
+        // if (numberAvailable !== 'Available: 0') {
+        //
+        // }
+      });
+  }
+};
+
+const clickPostedWork = () => {
+  cy.get('div[role="dialog"]').should('be.visible');
+  cy.contains('POST WORK BID').click();
+};
+
+const checkCompleteWorkAndTookDusk = () => {
+  cy.get('button:nth-child(6)').eq(0).should('be.visible');
+  cy.get('body').then(($check) => {
+    const item = $check.find('button:nth-child(6) > span:nth-child(1) > span:nth-child(1) > span:nth-child(2)');
+    if (item.hasClass('MuiBadge-anchorOriginTopRightRectangle')) {
+      cy.get('button:nth-child(6)').eq(0).click();
+      tookDuskFromInbox();
+      clickCloseDialog();
     } else {
-      cy.log('ok');
+      return null;
     }
   });
 };
 
-const clickDoJobButton = () => {
-  cy.contains('Do Job', { timeout: 100000000 }).should('not.be.disabled').click({ force: true, multiple: true });
-  cy.task('log', 'I click Do Job');
-};
-
-const checkViewsConfirm = () => {
-  cy.get('body').then(($buttonConf) => {
-    const item = $buttonConf.find('.MuiDialog-paper').find('button[type=button]').eq(2).find('> span');
-    const itemName = $buttonConf.find('.MuiDialog-paper').find('.MuiTypography-h6');
-    if (itemName.hasClass('.MuiTypography-h6')) {
+const tookDuskFromInbox = () => {
+  cy.get('body').then(($completeWork) => {
+    const checkButton = $completeWork.find('button[type="button"]').find('.MuiButton-fullWidth');
+    if (!checkButton.attr('disabled')) {
+      cy.contains('Claim').click({ multiple: true, force: true });
+      cy.task('log', 'Click Complete job');
+    } else {
       cy.log('lol');
-    } else {
-      if (item.text().includes('Confirm')) {
-        clickConfirmButton();
-        fixBugStamina();
-      } else {
-        cy.task('log', 'I not click Confirm');
-        cy.log('ok');
-      }
+      cy.task('log', 'Button complete disable');
     }
   });
-};
-
-const clickConfirmButton = () => {
-  cy.contains('Confirm').click({ force: true });
-  cy.task('log', 'I click Confirm');
-};
-
-const fixBugStamina = () => {
-  cy.get('body').then(($iconStamina) => {
-    const checkIconStamina = $iconStamina.find('div[title="Stamina"]').find('div:nth-child(5) > span');
-    if (!checkIconStamina) {
-      cy.reload;
-      cy.task('log', 'Stamina didn' / 't view');
-    } else {
-      cy.log('ok');
-      cy.task('log', 'Stamina view');
-    }
-  });
-};
-
-const clickCompleteJobOrLogout = () => {
-  cy.wait(2000);
-  cy.get('a[href="/jobs/worker"]').should('be.visible');
-  cy.get('a[href="/jobs/worker"]')
-    .then(($a) => {
-      const item = $a.find('.MuiBadge-anchorOriginTopLeftRectangle');
-      if (item.length > 0) {
-        return item[0];
-      } else {
-        return null;
-      }
-    })
-    .then(($div) => {
-      if ($div) {
-        cy.get('.MuiBadge-anchorOriginTopLeftRectangle')
-          .get('div > span > span > span')
-          .invoke('text')
-          .then((text) => +text)
-          .then((value) => {
-            cy.contains('Work Orders').click();
-            cy.contains('Worked Jobs').should('be.visible');
-            for (let i = 0; i < value; i++) {
-              cy.get('body').then(($complete) => {
-                const checkButton = $complete.find('button[aria-label="add"]');
-                if (checkButton) {
-                  if (!checkButton.attr('disabled')) {
-                    cy.get('button[aria-label="add"]').click({ multiple: true, force: true }).wait(5000);
-                    cy.task('log', 'Click Complete job');
-                  } else {
-                    cy.log('lol');
-                    cy.task('log', 'Button complete disable');
-                  }
-                } else {
-                  cy.task('log', 'I skip cycle by click COMPLETE');
-                  return;
-                }
-              });
-            }
-            clickMenuAndLogout();
-          });
-      } else {
-        clickMenuAndLogout();
-      }
-    });
 };
 
 const clickMenuAndLogout = () => {
