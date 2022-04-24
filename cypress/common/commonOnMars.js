@@ -36,6 +36,7 @@ const clickCloseButton = () => {
 };
 
 const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password) => {
+  cy.wait(7000);
   cy.get('body').then(($dialogMainPage) => {
     const dialogMainPage = $dialogMainPage.find('div:nth-child(2)');
     if (dialogMainPage.hasClass('modal-content')) {
@@ -188,11 +189,10 @@ const itemFindWork = () => {
       .invoke('text')
       .then((numberAvailable) => {
         cy.task('log', `Available work ${numberAvailable}`);
-        cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
-        clickPostedWork();
-        // if (numberAvailable !== 'Available: 0') {
-        //
-        // }
+        if (numberAvailable !== 'Available: 0') {
+          cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
+          clickPostedWork();
+        }
       });
   }
 };
