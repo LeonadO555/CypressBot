@@ -36,7 +36,6 @@ const clickCloseButton = () => {
 };
 
 const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password) => {
-  cy.wait(7000);
   cy.get('body').then(($dialogMainPage) => {
     const dialogMainPage = $dialogMainPage.find('div:nth-child(2)');
     if (dialogMainPage.hasClass('modal-content')) {
