@@ -162,6 +162,7 @@ const tookWork = () => {
     .then((numberStamina) => {
       if (numberStamina === 0) {
         cy.task('log', `Stamina ${numberStamina}`);
+        clickCloseDialog();
         clickMenuAndLogout();
         return;
       }
