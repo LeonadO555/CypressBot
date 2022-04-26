@@ -164,7 +164,8 @@ const tookCompleteJob = () => {
 const checkButtonCompleteJob = () => {
   cy.get('body').then(($complete) => {
     const checkButton = $complete.find('button[aria-label="add"]');
-    if (!cy.contains('No pending work orders.')) {
+    const noPendingWork = $complete.find('p.MuiTypography-root');
+    if (!noPendingWork) {
       if (!checkButton.attr('disabled')) {
         cy.get('button[aria-label="add"]').click({ multiple: true, force: true });
         cy.task('log', 'Click Complete job');
