@@ -4,13 +4,14 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   cy.task('log', logUser);
   checkAndTakeEat();
   cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
-  checkCompleteWorkAndTookDusk();
-  cy.task('log', 'I TOOK DUSK FROM INBOX');
   AllCheck(arr);
   cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
   clickButtonTransferJob();
-  cy.task('log', 'I FOLLOWED THE PAGE WITH JOB');
+  cy.task('log', 'I OPEN DIALOG WINDOW WITH JOB');
+  tookCompleteJob();
+  cy.task('log', 'I TOOK DUSK FROM WORKED JOB');
   tookWork();
+  cy.task('log', 'I TOOK ALL JOB');
 };
 
 const linkToJob = () => {
@@ -154,6 +155,29 @@ const clickButtonTransferJob = () => {
   cy.get('button:nth-child(2)').click();
 };
 
+const tookCompleteJob = () => {
+  cy.contains('Worked Jobs').should('be.visible');
+  cy.contains('Worked Jobs').click();
+  checkButtonCompleteJob();
+};
+
+const checkButtonCompleteJob = () => {
+  cy.get('body').then(($complete) => {
+    const checkButton = $complete.find('button[aria-label="add"]');
+    if (checkButton) {
+      if (!checkButton.attr('disabled')) {
+        cy.get('button[aria-label="add"]').click({ multiple: true, force: true });
+        cy.task('log', 'Click Complete job');
+      } else {
+        cy.log('lol');
+        cy.task('log', 'Button complete disable');
+      }
+    } else {
+      cy.task('log', 'I don t have complete work');
+    }
+  });
+};
+
 const tookWork = () => {
   cy.get('div[title="Stamina"]')
     .get('div:nth-child(5) > span:nth-child(2)')
@@ -168,18 +192,19 @@ const tookWork = () => {
       }
 
       cy.task('log', `Stamina ${numberStamina}`);
-      findWork();
+      findWork(numberStamina);
       tookWork();
     });
 };
 
-const findWork = () => {
+const findWork = (numberStamina) => {
   cy.contains('Find Work').should('be.visible');
-  itemFindWork();
+  cy.contains('Find Work').click();
+  itemFindWork(numberStamina);
 };
 
-const itemFindWork = () => {
-  const listItem = [0, 1, 2, 3, 4, 5, 6, 7];
+const itemFindWork = (numberStamina) => {
+  const listItem = [1, 5];
   for (const name of listItem) {
     cy.get('.content')
       .find('.item')
@@ -190,44 +215,19 @@ const itemFindWork = () => {
       .invoke('text')
       .then((numberAvailable) => {
         cy.task('log', `Available work ${numberAvailable}`);
-        if (numberAvailable !== 'Available: 0') {
-          cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
-          clickPostedWork();
-        }
+        cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
+        clickPostedWork(numberStamina);
       });
   }
 };
 
-const clickPostedWork = () => {
+const clickPostedWork = (numberStamina) => {
   cy.get('div[role="dialog"]').should('be.visible');
+  // if (numberStamina === 1) {
+  //   cy.get().type();
+  //   cy.get().type();
+  // }
   cy.contains('POST WORK BID').click();
-};
-
-const checkCompleteWorkAndTookDusk = () => {
-  cy.get('button:nth-child(6)').eq(0).should('be.visible');
-  cy.get('body').then(($check) => {
-    const item = $check.find('button:nth-child(6) > span:nth-child(1) > span:nth-child(1) > span:nth-child(2)');
-    if (item.hasClass('MuiBadge-anchorOriginTopRightRectangle')) {
-      cy.get('button:nth-child(6)').eq(0).click();
-      tookDuskFromInbox();
-      clickCloseDialog();
-    } else {
-      return null;
-    }
-  });
-};
-
-const tookDuskFromInbox = () => {
-  cy.get('body').then(($completeWork) => {
-    const checkButton = $completeWork.find('button[type="button"]').find('.MuiButton-fullWidth');
-    if (!checkButton.attr('disabled')) {
-      cy.contains('Claim').click({ multiple: true, force: true });
-      cy.task('log', 'Click Complete job');
-    } else {
-      cy.log('lol');
-      cy.task('log', 'Button complete disable');
-    }
-  });
 };
 
 const clickMenuAndLogout = () => {

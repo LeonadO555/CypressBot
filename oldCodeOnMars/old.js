@@ -108,3 +108,31 @@ const checkAndDoJob = () => {
       checkAndDoJob();
     });
 };
+
+//INBOX
+// const checkCompleteWorkAndTookDusk = () => {
+//   cy.get('button:nth-child(6)').eq(0).should('be.visible');
+//   cy.get('body').then(($check) => {
+//     const item = $check.find('button:nth-child(6) > span:nth-child(1) > span:nth-child(1) > span:nth-child(2)');
+//     if (item.hasClass('MuiBadge-anchorOriginTopRightRectangle')) {
+//       cy.get('button:nth-child(6)').eq(0).click();
+//       tookDuskFromInbox();
+//       clickCloseDialog();
+//     } else {
+//       return null;
+//     }
+//   });
+// };
+//
+// const tookDuskFromInbox = () => {
+//   cy.get('body').then(($completeWork) => {
+//     const checkButton = $completeWork.find('button[type="button"]').find('.MuiButton-fullWidth');
+//     if (!checkButton.attr('disabled')) {
+//       cy.contains('Claim').click({ multiple: true, force: true });
+//       cy.task('log', 'Click Complete job');
+//     } else {
+//       cy.log('lol');
+//       cy.task('log', 'Button complete disable');
+//     }
+//   });
+// };
