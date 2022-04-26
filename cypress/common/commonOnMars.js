@@ -164,7 +164,7 @@ const tookCompleteJob = () => {
 const checkButtonCompleteJob = () => {
   cy.get('body').then(($complete) => {
     const checkButton = $complete.find('button[aria-label="add"]');
-    if (checkButton) {
+    if (!cy.contains('No pending work orders.')) {
       if (!checkButton.attr('disabled')) {
         cy.get('button[aria-label="add"]').click({ multiple: true, force: true });
         cy.task('log', 'Click Complete job');
@@ -192,42 +192,84 @@ const tookWork = () => {
       }
 
       cy.task('log', `Stamina ${numberStamina}`);
-      findWork(numberStamina);
+      findWork();
       tookWork();
     });
 };
 
-const findWork = (numberStamina) => {
+const findWork = () => {
   cy.contains('Find Work').should('be.visible');
   cy.contains('Find Work').click();
-  itemFindWork(numberStamina);
+  itemFindWork();
 };
 
-const itemFindWork = (numberStamina) => {
+const itemFindWork = () => {
   const listItem = [1, 5];
   for (const name of listItem) {
-    cy.get('.content')
-      .find('.item')
-      .eq(name)
-      .find('.item-header')
-      .find('.item-available')
-      .find('.value')
+    cy.get('div[title="Stamina"]')
+      .get('div:nth-child(5) > span:nth-child(2)')
       .invoke('text')
-      .then((numberAvailable) => {
-        cy.task('log', `Available work ${numberAvailable}`);
-        cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
-        clickPostedWork(numberStamina);
+      .then(parseInt)
+      .then((numberStamina) => {
+        if (numberStamina === 0) {
+          clickCloseDialog();
+          clickMenuAndLogout();
+        }
+        cy.get('.content')
+          .find('.item')
+          .eq(name)
+          .find('.item-header')
+          .find('.item-available')
+          .find('.value')
+          .invoke('text')
+          .then((numberAvailable) => {
+            cy.task('log', `Available work ${numberAvailable}`);
+            cy.get('.content')
+              .find('.item')
+              .eq(name)
+              .find('.item-header')
+              .find('.item-available')
+              .find('.value')
+              .click();
+            clickPostedWork(numberStamina);
+          });
       });
+  }
+};
+
+const writeNumberStaminaAndDusk = (number) => {
+  for (let i = 1; i < number; i++) {
+    cy.get(
+      'div.form-control:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
+    ).click();
+  }
+  for (let i = 1; i < number; i++) {
+    cy.get(
+      'div.form-control:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
+    ).click();
   }
 };
 
 const clickPostedWork = (numberStamina) => {
   cy.get('div[role="dialog"]').should('be.visible');
-  // if (numberStamina === 1) {
-  //   cy.get().type();
-  //   cy.get().type();
-  // }
+  if (numberStamina > 5) {
+    writeNumberStaminaAndDusk(5);
+  }
+  if (numberStamina === 4) {
+    writeNumberStaminaAndDusk(4);
+  }
+  if (numberStamina === 3) {
+    writeNumberStaminaAndDusk(3);
+  }
+  if (numberStamina === 2) {
+    writeNumberStaminaAndDusk(2);
+  }
+  if (numberStamina === 1) {
+    writeNumberStaminaAndDusk(1);
+  }
   cy.contains('POST WORK BID').click();
+  cy.contains('Successful').should('be.visible');
+  cy.wait(10000);
 };
 
 const clickMenuAndLogout = () => {
