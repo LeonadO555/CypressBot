@@ -11,7 +11,6 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   tookCompleteJob();
   cy.task('log', 'I TOOK DUSK FROM WORKED JOB');
   tookWork();
-  cy.task('log', 'I TOOK ALL JOB');
 };
 
 const linkToJob = () => {
@@ -28,6 +27,19 @@ const loginUser = (userName, userPassword) => {
   cy.task('log', 'Click login');
 };
 
+const checkCloseButton = () => {
+  cy.get('body').then(($checkDialogMainPage) => {
+    const dialog = $checkDialogMainPage.find('div[role="dialog"]');
+    if (dialog.text().includes('TOS Update!')) {
+      cy.task('log', 'Dialog visible');
+      clickCloseButton();
+    } else {
+      cy.contains('Actions').should('be.visible');
+      cy.task('log', 'Dialog no visible');
+    }
+  });
+};
+
 const clickCloseButton = () => {
   cy.get('div[role="dialog"]')
     .get('button[type="button"]')
@@ -41,7 +53,7 @@ const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password)
   cy.get('body').then(($dialogMainPage) => {
     const dialogMainPage = $dialogMainPage.find('div:nth-child(2)');
     if (dialogMainPage.hasClass('modal-content')) {
-      clickCloseButton();
+      checkCloseButton();
       clickMenuAndLogout();
       linkToJob();
       loginUser(username, password);
@@ -54,7 +66,7 @@ const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password)
 
 const checkAndTakeEat = () => {
   cy.wait(5000);
-  clickCloseButton();
+  checkCloseButton();
   cy.get('body').then(($claimButton) => {
     const item = $claimButton.find('div[role="dialog"]').find('button[type="button"]').find('>span');
     if (item.text().includes('Claim')) {
@@ -162,21 +174,17 @@ const tookCompleteJob = () => {
 };
 
 const checkButtonCompleteJob = () => {
-  cy.get('body').then(($complete) => {
-    const checkButton = $complete.find('button[aria-label="add"]');
-    const noPendingWork = $complete.find('p.MuiTypography-root');
-    if (!noPendingWork) {
-      if (!checkButton.attr('disabled')) {
-        cy.get('button[aria-label="add"]').click({ multiple: true, force: true });
+  for (let i = 0; i < 10; i++) {
+    cy.get('body').then(($complete) => {
+      const tabList = $complete.find('div[role="tablist"]');
+      if (!tabList.text().includes('Worked Jobs (0)')) {
+        cy.get('button[aria-label="add"]').click({ multiple: true, force: true }).wait(500);
         cy.task('log', 'Click Complete job');
       } else {
-        cy.log('lol');
-        cy.task('log', 'Button complete disable');
+        cy.task('log', 'I don t have complete work');
       }
-    } else {
-      cy.task('log', 'I don t have complete work');
-    }
-  });
+    });
+  }
 };
 
 const tookWork = () => {
