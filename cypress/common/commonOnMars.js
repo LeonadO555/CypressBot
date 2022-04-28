@@ -259,19 +259,25 @@ const writeNumberStaminaAndDusk = (number) => {
   }
 };
 
+const rnd = (a, b) => Math.floor(('0.' + (new Date().getMilliseconds() + ''.slice(1))) * (b - a)) + a;
+
 const clickPostedWork = (numberStamina) => {
   cy.get('div[role="dialog"]').should('be.visible');
+  const random1 = rnd(1, 5);
+  const random2 = rnd(1, 4);
+  const random3 = rnd(1, 3);
+  const random4 = rnd(1, 2);
   if (numberStamina > 5) {
-    writeNumberStaminaAndDusk(5);
+    writeNumberStaminaAndDusk(random1);
   }
   if (numberStamina === 4) {
-    writeNumberStaminaAndDusk(4);
+    writeNumberStaminaAndDusk(random2);
   }
   if (numberStamina === 3) {
-    writeNumberStaminaAndDusk(3);
+    writeNumberStaminaAndDusk(random3);
   }
   if (numberStamina === 2) {
-    writeNumberStaminaAndDusk(2);
+    writeNumberStaminaAndDusk(random4);
   }
   if (numberStamina === 1) {
     writeNumberStaminaAndDusk(1);
