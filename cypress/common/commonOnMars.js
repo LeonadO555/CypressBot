@@ -201,49 +201,30 @@ const tookWork = () => {
       }
 
       cy.task('log', `Stamina ${numberStamina}`);
-      findWork();
+      findWork(numberStamina);
       tookWork();
     });
 };
 
-const findWork = () => {
+const findWork = (numberStamina) => {
   cy.contains('Find Work').should('be.visible');
   cy.contains('Find Work').click();
-  itemFindWork();
+  itemFindWork(numberStamina);
 };
 
-const itemFindWork = () => {
-  const listItem = [1, 5];
-  for (const name of listItem) {
-    cy.get('div[title="Stamina"]')
-      .get('div:nth-child(5) > span:nth-child(2)')
-      .invoke('text')
-      .then(parseInt)
-      .then((numberStamina) => {
-        if (numberStamina === 0) {
-          clickCloseDialog();
-          clickMenuAndLogout();
-        }
-        cy.get('.content')
-          .find('.item')
-          .eq(name)
-          .find('.item-header')
-          .find('.item-available')
-          .find('.value')
-          .invoke('text')
-          .then((numberAvailable) => {
-            cy.task('log', `Available work ${numberAvailable}`);
-            cy.get('.content')
-              .find('.item')
-              .eq(name)
-              .find('.item-header')
-              .find('.item-available')
-              .find('.value')
-              .click();
-            clickPostedWork(numberStamina);
-          });
-      });
-  }
+const itemFindWork = (numberStamina) => {
+  cy.get('.content')
+    .find('.item')
+    .eq(1)
+    .find('.item-header')
+    .find('.item-available')
+    .find('.value')
+    .invoke('text')
+    .then((numberAvailable) => {
+      cy.task('log', `Available work ${numberAvailable}`);
+      cy.get('.content').find('.item').eq(1).find('.item-header').find('.item-available').find('.value').click();
+      clickPostedWork(numberStamina);
+    });
 };
 
 const writeNumberStaminaAndDusk = (number) => {
@@ -281,6 +262,9 @@ const clickPostedWork = (numberStamina) => {
   }
   if (numberStamina === 1) {
     writeNumberStaminaAndDusk(1);
+  }
+  if (numberStamina === 0) {
+    cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
   }
   cy.contains('POST WORK BID').click();
   cy.contains('Successful').should('be.visible');
