@@ -1,6 +1,6 @@
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
-  logoutIfActiveSessionNoActualUserAndLoginActualUser(username, password);
+  loginUser(username, password);
   cy.task('log', logUser);
   checkAndTakeEat();
   cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
