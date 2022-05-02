@@ -201,7 +201,6 @@ const tookWork = (arr) => {
         clickMenuAndLogout();
         return;
       }
-
       cy.task('log', `Stamina ${numberStamina}`);
       itemFindWork(numberStamina);
       tookWork();
@@ -240,7 +239,7 @@ const itemAvailableWork = (arr) => {
       .find('.value')
       .invoke('text')
       .then((numberAvailable) => {
-        arr.push(`Stamina: ${numberAvailable}`);
+        arr.push(`${name}: ${numberAvailable}`);
       });
   }
 };
