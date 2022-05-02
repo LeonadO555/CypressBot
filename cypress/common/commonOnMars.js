@@ -10,6 +10,7 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   cy.task('log', 'I OPEN DIALOG WINDOW WITH JOB');
   tookCompleteJob();
   cy.task('log', 'I TOOK DUSK FROM WORKED JOB');
+  findWork();
   tookWork(arr);
 };
 
@@ -202,15 +203,14 @@ const tookWork = (arr) => {
       }
 
       cy.task('log', `Stamina ${numberStamina}`);
-      findWork(numberStamina);
+      itemFindWork(numberStamina);
       tookWork();
     });
 };
 
-const findWork = (numberStamina) => {
+const findWork = () => {
   cy.contains('Find Work').should('be.visible');
   cy.contains('Find Work').click();
-  itemFindWork(numberStamina);
 };
 
 const itemFindWork = (numberStamina) => {
@@ -229,6 +229,7 @@ const itemFindWork = (numberStamina) => {
 };
 
 const itemAvailableWork = (arr) => {
+  findWork();
   const availableWork = [0, 1, 2, 3, 4, 5, 6, 7];
   for (const name of availableWork) {
     cy.get('.content')
