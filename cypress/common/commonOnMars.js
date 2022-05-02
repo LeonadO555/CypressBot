@@ -213,18 +213,21 @@ const findWork = () => {
 };
 
 const itemFindWork = (numberStamina) => {
-  cy.get('.content')
-    .find('.item')
-    .eq(1)
-    .find('.item-header')
-    .find('.item-available')
-    .find('.value')
-    .invoke('text')
-    .then((numberAvailable) => {
-      cy.task('log', `Available work ${numberAvailable}`);
-      cy.get('.content').find('.item').eq(1).find('.item-header').find('.item-available').find('.value').click();
-      clickPostedWork(numberStamina);
-    });
+  const availableWork = [0, 1, 6];
+  for (const name of availableWork) {
+    cy.get('.content')
+      .find('.item')
+      .eq(name)
+      .find('.item-header')
+      .find('.item-available')
+      .find('.value')
+      .invoke('text')
+      .then((numberAvailable) => {
+        cy.task('log', `Available work ${numberAvailable}`);
+        cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
+        clickPostedWork(numberStamina);
+      });
+  }
 };
 
 const itemAvailableWork = (arr) => {
