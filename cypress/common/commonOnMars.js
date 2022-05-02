@@ -1,5 +1,3 @@
-import * as constants from 'constants';
-
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
   loginUser(username, password);
