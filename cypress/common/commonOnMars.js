@@ -1,3 +1,5 @@
+import * as constants from 'constants';
+
 export const onMarsCommon = (username, password, arr, logUser) => {
   linkToJob();
   loginUser(username, password);
@@ -243,6 +245,14 @@ const itemAvailableWork = (arr) => {
       .invoke('text')
       .then((numberAvailable) => {
         arr.push(`${name}: ${numberAvailable}`);
+        // let el = numberAvailable;
+        // let numEl = '';
+        // for (const index in el) {
+        //   if (parseInt(el[index])) {
+        //     numEl += el[index];
+        //   }
+        // }
+        // const work = parseInt(numEl);
       });
   }
 };
@@ -251,12 +261,12 @@ const writeNumberStaminaAndDusk = (number) => {
   for (let i = 1; i < number; i++) {
     cy.get(
       'div.form-control:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
-    ).click();
+    ).click({ force: true });
   }
   for (let i = 1; i < number; i++) {
     cy.get(
       'div.form-control:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
-    ).click();
+    ).click({ force: true });
   }
 };
 
