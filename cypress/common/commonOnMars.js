@@ -10,7 +10,7 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   cy.task('log', 'I OPEN DIALOG WINDOW WITH JOB');
   tookCompleteJob();
   cy.task('log', 'I TOOK DUSK FROM WORKED JOB');
-  tookWork();
+  tookWork(arr);
 };
 
 const linkToJob = () => {
@@ -187,7 +187,7 @@ const checkButtonCompleteJob = () => {
   }
 };
 
-const tookWork = () => {
+const tookWork = (arr) => {
   cy.get('div[title="Stamina"]')
     .get('div:nth-child(5) > span:nth-child(2)')
     .invoke('text')
@@ -195,6 +195,7 @@ const tookWork = () => {
     .then((numberStamina) => {
       if (numberStamina === 0) {
         cy.task('log', `Stamina ${numberStamina}`);
+        itemAvailableWork(arr);
         clickCloseDialog();
         clickMenuAndLogout();
         return;
@@ -225,6 +226,22 @@ const itemFindWork = (numberStamina) => {
       cy.get('.content').find('.item').eq(1).find('.item-header').find('.item-available').find('.value').click();
       clickPostedWork(numberStamina);
     });
+};
+
+const itemAvailableWork = (arr) => {
+  const availableWork = [0, 1, 2, 3, 4, 5, 6, 7];
+  for (const name of availableWork) {
+    cy.get('.content')
+      .find('.item')
+      .eq(name)
+      .find('.item-header')
+      .find('.item-available')
+      .find('.value')
+      .invoke('text')
+      .then((numberAvailable) => {
+        arr.push(`Stamina: ${numberAvailable}`);
+      });
+  }
 };
 
 const writeNumberStaminaAndDusk = (number) => {
