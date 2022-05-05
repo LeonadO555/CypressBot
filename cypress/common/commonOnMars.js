@@ -213,7 +213,7 @@ const findWork = () => {
 };
 
 const itemFindWork = (numberStamina) => {
-  const availableWork = [0, 1, 6];
+  const availableWork = [0, 1, 4, 5, 6];
   for (const name of availableWork) {
     cy.get('.content')
       .find('.item')
