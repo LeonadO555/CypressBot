@@ -68,6 +68,7 @@ const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password)
 const checkAndTakeEat = () => {
   cy.wait(5000);
   checkCloseButton();
+  clickCloseDialog();
   cy.get('body').then(($claimButton) => {
     const item = $claimButton.find('div[role="dialog"]').find('button[type="button"]').find('>span');
     if (item.text().includes('Claim')) {
@@ -123,7 +124,7 @@ const AllCheck = (arr) => {
   checkStamina(arr);
 };
 const clickCloseDialog = () => {
-  cy.get('div[role="dialog"]').get('button[type=button]').eq(4).should('be.visible').click({ multiple: true });
+  cy.get('div[role="dialog"]').get('button[type=button]').eq(5).should('be.visible').click({ multiple: true });
 };
 
 const clickConfirmButton = () => {
@@ -212,7 +213,7 @@ const findWork = () => {
   cy.contains('Find Work').click();
 };
 
-const itemFindWork = (numberStamina) => {
+const itemFindWork = () => {
   const availableWork = [0, 1, 4, 5, 6];
   for (const name of availableWork) {
     cy.get('.content')
@@ -225,7 +226,7 @@ const itemFindWork = (numberStamina) => {
       .then((numberAvailable) => {
         cy.task('log', `Available work ${numberAvailable}`);
         cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
-        clickPostedWork(numberStamina);
+        clickPostedWork();
       });
   }
 };
@@ -266,37 +267,53 @@ const writeNumberStaminaAndDusk = (number) => {
       'div.form-control:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
     ).click({ force: true });
   }
+  cy.contains('POST WORK BID').click();
+  cy.get('body').then(($checkError) => {
+    const item = $checkError.find('#notistack-snackbar');
+    if (item.text().includes('Insufficient player stamina')) {
+      cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
+      cy.task('log', 'Insufficient player stamina');
+    } else {
+      cy.task('log', 'Successful');
+
+      cy.contains('Successful').should('be.visible');
+      cy.wait(10000);
+    }
+  });
 };
 
 const rnd = (a, b) => Math.floor(('0.' + (new Date().getMilliseconds() + ''.slice(1))) * (b - a)) + a;
 
-const clickPostedWork = (numberStamina) => {
-  cy.get('div[role="dialog"]').should('be.visible');
-  const random1 = rnd(1, 5);
-  const random2 = rnd(1, 4);
-  const random3 = rnd(1, 3);
-  const random4 = rnd(1, 2);
-  if (numberStamina > 5) {
-    writeNumberStaminaAndDusk(random1);
-  }
-  if (numberStamina === 4) {
-    writeNumberStaminaAndDusk(random2);
-  }
-  if (numberStamina === 3) {
-    writeNumberStaminaAndDusk(random3);
-  }
-  if (numberStamina === 2) {
-    writeNumberStaminaAndDusk(random4);
-  }
-  if (numberStamina === 1) {
-    writeNumberStaminaAndDusk(1);
-  }
-  if (numberStamina === 0) {
-    cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
-  }
-  cy.contains('POST WORK BID').click();
-  cy.contains('Successful').should('be.visible');
-  cy.wait(10000);
+const clickPostedWork = () => {
+  cy.get('div[title="Stamina"]')
+    .get('div:nth-child(5) > span:nth-child(2)')
+    .invoke('text')
+    .then(parseInt)
+    .then((numberStamina) => {
+      cy.get('div[role="dialog"]').should('be.visible');
+      const random1 = rnd(1, 3);
+      const random2 = rnd(1, 3);
+      const random3 = rnd(1, 3);
+      const random4 = rnd(1, 2);
+      if (numberStamina > 5) {
+        writeNumberStaminaAndDusk(random1);
+      }
+      if (numberStamina === 4) {
+        writeNumberStaminaAndDusk(random2);
+      }
+      if (numberStamina === 3) {
+        writeNumberStaminaAndDusk(random3);
+      }
+      if (numberStamina === 2) {
+        writeNumberStaminaAndDusk(random4);
+      }
+      if (numberStamina === 1) {
+        writeNumberStaminaAndDusk(1);
+      }
+      if (numberStamina === 0) {
+        cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
+      }
+    });
 };
 
 const clickMenuAndLogout = () => {
