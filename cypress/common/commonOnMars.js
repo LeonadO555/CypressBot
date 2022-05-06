@@ -34,6 +34,7 @@ const checkCloseButton = () => {
     if (dialog.text().includes('TOS Update!')) {
       cy.task('log', 'Dialog visible');
       clickCloseButton();
+      cy.get('div.MuiDialog-container.MuiDialog-scrollPaper > div > button').click();
     } else {
       cy.contains('Actions').should('be.visible');
       cy.task('log', 'Dialog no visible');
@@ -68,7 +69,6 @@ const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password)
 const checkAndTakeEat = () => {
   cy.wait(5000);
   checkCloseButton();
-  clickCloseDialog();
   cy.get('body').then(($claimButton) => {
     const item = $claimButton.find('div[role="dialog"]').find('button[type="button"]').find('>span');
     if (item.text().includes('Claim')) {
