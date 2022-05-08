@@ -11,7 +11,7 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   tookCompleteJob();
   cy.task('log', 'I TOOK DUSK FROM WORKED JOB');
   findWork();
-  tookWork(arr);
+  tookWork();
 };
 
 const linkToJob = () => {
@@ -34,7 +34,6 @@ const checkCloseButton = () => {
     if (dialog.text().includes('TOS Update!')) {
       cy.task('log', 'Dialog visible');
       clickCloseButton();
-      cy.get('div.MuiDialog-container.MuiDialog-scrollPaper > div > button').click();
     } else {
       cy.contains('Actions').should('be.visible');
       cy.task('log', 'Dialog no visible');
@@ -43,10 +42,9 @@ const checkCloseButton = () => {
 };
 
 const clickCloseButton = () => {
-  cy.get('div[role="dialog"]')
-    .get('button[type="button"]')
-    .get('[aria-hidden="true"]')
-    .click({ force: true, multiple: true });
+  cy.get('div[role="dialog"]').should('be.visible');
+  cy.get('[role="none presentation"]').click('bottom', { multiple: true, force: true });
+
   cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
 };
 
@@ -67,7 +65,7 @@ const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password)
 };
 
 const checkAndTakeEat = () => {
-  cy.wait(5000);
+  cy.wait(10000);
   checkCloseButton();
   cy.get('body').then(($claimButton) => {
     const item = $claimButton.find('div[role="dialog"]').find('button[type="button"]').find('>span');
@@ -176,20 +174,18 @@ const tookCompleteJob = () => {
 };
 
 const checkButtonCompleteJob = () => {
-  for (let i = 0; i < 10; i++) {
-    cy.get('body').then(($complete) => {
-      const tabList = $complete.find('div[role="tablist"]');
-      if (!tabList.text().includes('Worked Jobs (0)')) {
-        cy.get('button[aria-label="add"]').click({ multiple: true, force: true }).wait(500);
-        cy.task('log', 'Click Complete job');
-      } else {
-        cy.task('log', 'I don t have complete work');
-      }
-    });
-  }
+  cy.get('body').then(($complete) => {
+    const tabList = $complete.find('div[role="tablist"]');
+    if (!tabList.text().includes('Worked Jobs (0)')) {
+      cy.get('button[aria-label="add"]').click({ multiple: true, force: true }).wait(500);
+      cy.task('log', 'Click Complete job');
+    } else {
+      cy.task('log', 'I don t have complete work');
+    }
+  });
 };
 
-const tookWork = (arr) => {
+const tookWork = () => {
   cy.get('div[title="Stamina"]')
     .get('div:nth-child(5) > span:nth-child(2)')
     .invoke('text')
@@ -197,13 +193,12 @@ const tookWork = (arr) => {
     .then((numberStamina) => {
       if (numberStamina === 0) {
         cy.task('log', `Stamina ${numberStamina}`);
-        itemAvailableWork(arr);
         clickCloseDialog();
         clickMenuAndLogout();
         return;
       }
       cy.task('log', `Stamina ${numberStamina}`);
-      itemFindWork(numberStamina);
+      clickPostedWork(numberStamina);
       tookWork();
     });
 };
@@ -211,49 +206,6 @@ const tookWork = (arr) => {
 const findWork = () => {
   cy.contains('Find Work').should('be.visible');
   cy.contains('Find Work').click();
-};
-
-const itemFindWork = () => {
-  const availableWork = [0, 1, 4, 5, 6];
-  for (const name of availableWork) {
-    cy.get('.content')
-      .find('.item')
-      .eq(name)
-      .find('.item-header')
-      .find('.item-available')
-      .find('.value')
-      .invoke('text')
-      .then((numberAvailable) => {
-        cy.task('log', `Available work ${numberAvailable}`);
-        cy.get('.content').find('.item').eq(name).find('.item-header').find('.item-available').find('.value').click();
-        clickPostedWork();
-      });
-  }
-};
-
-const itemAvailableWork = (arr) => {
-  findWork();
-  const availableWork = [0, 1, 2, 3, 4, 5, 6, 7];
-  for (const name of availableWork) {
-    cy.get('.content')
-      .find('.item')
-      .eq(name)
-      .find('.item-header')
-      .find('.item-available')
-      .find('.value')
-      .invoke('text')
-      .then((numberAvailable) => {
-        arr.push(`${name}: ${numberAvailable}`);
-        // let el = numberAvailable;
-        // let numEl = '';
-        // for (const index in el) {
-        //   if (parseInt(el[index])) {
-        //     numEl += el[index];
-        //   }
-        // }
-        // const work = parseInt(numEl);
-      });
-  }
 };
 
 const writeNumberStaminaAndDusk = (number) => {
@@ -275,45 +227,40 @@ const writeNumberStaminaAndDusk = (number) => {
       cy.task('log', 'Insufficient player stamina');
     } else {
       cy.task('log', 'Successful');
-
       cy.contains('Successful').should('be.visible');
-      cy.wait(10000);
+      cy.wait(5000);
     }
   });
 };
 
 const rnd = (a, b) => Math.floor(('0.' + (new Date().getMilliseconds() + ''.slice(1))) * (b - a)) + a;
 
-const clickPostedWork = () => {
-  cy.get('div[title="Stamina"]')
-    .get('div:nth-child(5) > span:nth-child(2)')
-    .invoke('text')
-    .then(parseInt)
-    .then((numberStamina) => {
-      cy.get('div[role="dialog"]').should('be.visible');
-      const random1 = rnd(1, 3);
-      const random2 = rnd(1, 3);
-      const random3 = rnd(1, 3);
-      const random4 = rnd(1, 2);
-      if (numberStamina > 5) {
-        writeNumberStaminaAndDusk(random1);
-      }
-      if (numberStamina === 4) {
-        writeNumberStaminaAndDusk(random2);
-      }
-      if (numberStamina === 3) {
-        writeNumberStaminaAndDusk(random3);
-      }
-      if (numberStamina === 2) {
-        writeNumberStaminaAndDusk(random4);
-      }
-      if (numberStamina === 1) {
-        writeNumberStaminaAndDusk(1);
-      }
-      if (numberStamina === 0) {
-        cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
-      }
-    });
+const clickPostedWork = (numberStamina) => {
+  const random = rnd(0, 7);
+  const random1 = rnd(1, 3);
+  const random2 = rnd(1, 3);
+  const random3 = rnd(1, 3);
+  const random4 = rnd(1, 2);
+  cy.get('.content').find('.item').eq(random).click();
+  cy.get('div[role="dialog"]').should('be.visible');
+  if (numberStamina >= 5) {
+    writeNumberStaminaAndDusk(random1);
+  }
+  if (numberStamina === 4) {
+    writeNumberStaminaAndDusk(random2);
+  }
+  if (numberStamina === 3) {
+    writeNumberStaminaAndDusk(random3);
+  }
+  if (numberStamina === 2) {
+    writeNumberStaminaAndDusk(random4);
+  }
+  if (numberStamina === 1) {
+    writeNumberStaminaAndDusk(1);
+  }
+  if (numberStamina === 0) {
+    cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
+  }
 };
 
 const clickMenuAndLogout = () => {
