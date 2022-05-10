@@ -6,7 +6,7 @@ before(function () {
   cy.clearCookies();
 });
 
-describe('ONMARS', () => {
+describe('ONMARS2', () => {
   it('TOOK WORK PART TWO', () => {
     const arr = [];
     onMarsCommon(Cypress.env('user_14'), Cypress.env('pas_14'), arr, 'USERNAME 14');
