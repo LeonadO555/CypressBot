@@ -7,8 +7,8 @@ before(function () {
   cy.clearCookies();
 });
 
-describe('DO JOB', () => {
-  it('Click Do Job button and wait 1 minute', () => {
+describe('ONMARS', () => {
+  it('TOOK WORK PART ONE', () => {
     const arr = [];
     onMarsCommon(Cypress.env('user_1'), Cypress.env('pas_1'), arr, 'USERNAME 1');
     cy.writeFile('/tmp/dataActualUser.json', arr);
@@ -27,6 +27,14 @@ describe('DO JOB', () => {
     onMarsCommon(Cypress.env('user_8'), Cypress.env('pas_8'), arr, 'USERNAME 8');
     cy.writeFile('/tmp/dataActualUser.json', arr);
     onMarsCommon(Cypress.env('user_9'), Cypress.env('pas_9'), arr, 'USERNAME 9');
+    cy.writeFile('/tmp/dataActualUser.json', arr);
+    onMarsCommon(Cypress.env('user_10'), Cypress.env('pas_10'), arr, 'USERNAME 10');
+    cy.writeFile('/tmp/dataActualUser.json', arr);
+    onMarsCommon(Cypress.env('user_11'), Cypress.env('pas_10'), arr, 'USERNAME 11');
+    cy.writeFile('/tmp/dataActualUser.json', arr);
+    onMarsCommon(Cypress.env('user_12'), Cypress.env('pas_10'), arr, 'USERNAME 12');
+    cy.writeFile('/tmp/dataActualUser.json', arr);
+    onMarsCommon(Cypress.env('user_13'), Cypress.env('pas_10'), arr, 'USERNAME 13');
     cy.writeFile('/tmp/dataActualUser.json', arr);
   });
 });

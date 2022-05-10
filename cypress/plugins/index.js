@@ -59,6 +59,24 @@ module.exports = function (on, config) {
   config.env.pas_16 = process.env.PASSWORD_16;
   config.env.user_17 = process.env.USERNAME_17;
   config.env.pas_17 = process.env.PASSWORD_17;
+  config.env.user_18 = process.env.USERNAME_18;
+  config.env.pas_18 = process.env.PASSWORD_18;
+  config.env.user_19 = process.env.USERNAME_19;
+  config.env.pas_19 = process.env.PASSWORD_19;
+  config.env.user_20 = process.env.USERNAME_20;
+  config.env.pas_20 = process.env.PASSWORD_20;
+  config.env.user_21 = process.env.USERNAME_21;
+  config.env.pas_21 = process.env.PASSWORD_21;
+  config.env.user_22 = process.env.USERNAME_22;
+  config.env.pas_22 = process.env.PASSWORD_22;
+  config.env.user_23 = process.env.USERNAME_23;
+  config.env.pas_23 = process.env.PASSWORD_23;
+  config.env.user_24 = process.env.USERNAME_24;
+  config.env.pas_24 = process.env.PASSWORD_24;
+  config.env.user_25 = process.env.USERNAME_25;
+  config.env.pas_25 = process.env.PASSWORD_25;
+  config.env.user_26 = process.env.USERNAME_26;
+  config.env.pas_26 = process.env.PASSWORD_26;
 
   return config;
 };
