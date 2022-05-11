@@ -34,11 +34,11 @@ describe('ONMARS', () => {
 
   it('TOOK WORK PART ONE OTHER', () => {
     const arr = [];
-    // onMarsCommon(Cypress.env('user_11'), Cypress.env('pas_10'), arr, 'USERNAME 11');
+    // onMarsCommon(Cypress.env('user_11'), Cypress.env('pas_11'), arr, 'USERNAME 11');
     // cy.writeFile('/tmp/dataActualUser.json', arr);
-    onMarsCommon(Cypress.env('user_12'), Cypress.env('pas_10'), arr, 'USERNAME 12');
+    onMarsCommon(Cypress.env('user_12'), Cypress.env('pas_12'), arr, 'USERNAME 12');
     cy.writeFile('/tmp/dataActualUser.json', arr);
-    onMarsCommon(Cypress.env('user_13'), Cypress.env('pas_10'), arr, 'USERNAME 13');
+    onMarsCommon(Cypress.env('user_13'), Cypress.env('pas_13'), arr, 'USERNAME 13');
     cy.writeFile('/tmp/dataActualUser.json', arr);
   });
 });
