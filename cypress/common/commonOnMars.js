@@ -44,24 +44,7 @@ const checkCloseButton = () => {
 const clickCloseButton = () => {
   cy.get('div[role="dialog"]').should('be.visible');
   cy.get('[role="none presentation"]').click('bottom', { multiple: true, force: true });
-
   cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
-};
-
-const logoutIfActiveSessionNoActualUserAndLoginActualUser = (username, password) => {
-  cy.wait(7000);
-  cy.get('body').then(($dialogMainPage) => {
-    const dialogMainPage = $dialogMainPage.find('div:nth-child(2)');
-    if (dialogMainPage.hasClass('modal-content')) {
-      checkCloseButton();
-      clickMenuAndLogout();
-      linkToJob();
-      loginUser(username, password);
-    } else {
-      linkToJob();
-      loginUser(username, password);
-    }
-  });
 };
 
 const checkAndTakeEat = () => {
@@ -76,10 +59,6 @@ const checkAndTakeEat = () => {
     }
   });
 };
-const clickClaim = () => {
-  cy.get('div[role="dialog"]').find('button[type="button"]').find('>span').contains('Claim').click();
-  cy.task('log', 'Click Claim');
-};
 
 const ifClaim = () => {
   clickClaim();
@@ -88,11 +67,20 @@ const ifClaim = () => {
   clickCloseDialog();
 };
 
+const clickCloseDialog = () => {
+  cy.get('div[role="dialog"]').get('button[type=button]').eq(5).should('be.visible').click({ multiple: true });
+};
+
 const ifNotClaim = () => {
   cy.task('log', 'I not click Claim');
   openAction();
   checkDisableEatRation();
   checkDisableEatSnack();
+};
+
+const clickClaim = () => {
+  cy.get('div[role="dialog"]').find('button[type="button"]').find('>span').contains('Claim').click();
+  cy.task('log', 'Click Claim');
 };
 
 const openAction = () => {
@@ -117,7 +105,8 @@ const checkDisableEatSnack = () => {
     if (!checkEatRation.attr('disabled')) {
       ifNoDisabledEatSnack();
     } else {
-      ifDisabledEatSnack();
+      clickCloseDialog();
+      cy.task('log', 'I no catch Eat Snack');
     }
   });
 };
@@ -135,11 +124,6 @@ const ifNoDisabledEatSnack = () => {
   clickConfirmButton();
   clickCloseDialog();
   cy.task('log', 'I catch Eat Snack');
-};
-
-const ifDisabledEatSnack = () => {
-  clickCloseDialog();
-  cy.task('log', 'I no catch Eat Snack');
 };
 
 const checkDusk = (arr) => {
@@ -179,9 +163,6 @@ const AllCheck = (arr) => {
   checkDusk(arr);
   checkStamina(arr);
 };
-const clickCloseDialog = () => {
-  cy.get('div[role="dialog"]').get('button[type=button]').eq(5).should('be.visible').click({ multiple: true });
-};
 
 const clickConfirmButton = () => {
   cy.contains('Confirm').should('be.visible').click();
@@ -212,6 +193,11 @@ const checkButtonCompleteJob = () => {
   });
 };
 
+const findWork = () => {
+  cy.contains('Find Work').should('be.visible');
+  cy.contains('Find Work').click();
+};
+
 const tookWork = () => {
   cy.get('div[title="Stamina"]')
     .get('div:nth-child(5) > span:nth-child(2)')
@@ -230,22 +216,54 @@ const tookWork = () => {
     });
 };
 
-const findWork = () => {
-  cy.contains('Find Work').should('be.visible');
-  cy.contains('Find Work').click();
+const rnd = (a, b) => Math.floor(('0.' + (new Date().getMilliseconds() + ''.slice(1))) * (b - a)) + a;
+
+const clickPostedWork = (numberStamina) => {
+  randomChangeWork();
+  randomReturnStaminaAndDusk(numberStamina);
+};
+
+const randomChangeWork = () => {
+  const random = rnd(0, 7);
+  cy.get('.content').find('.item').eq(random).click();
+  cy.get('div[role="dialog"]').should('be.visible');
+};
+
+const randomReturnStaminaAndDusk = (numberStamina) => {
+  const random = rnd(1, 3);
+  if (numberStamina >= 2) {
+    writeNumberStaminaAndDusk(random);
+  }
+  if (numberStamina === 1) {
+    writeNumberStaminaAndDusk(1);
+  }
+  if (numberStamina === 0) {
+    cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
+  }
 };
 
 const writeNumberStaminaAndDusk = (number) => {
+  returnDusk(number);
+  returnStamina(number);
+  clickPostedWorkAndCheckError();
+};
+
+const returnDusk = (number) => {
   for (let i = 1; i < number; i++) {
     cy.get(
       'div.form-control:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
     ).click({ force: true });
   }
+};
+const returnStamina = (number) => {
   for (let i = 1; i < number; i++) {
     cy.get(
       'div.form-control:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
     ).click({ force: true });
   }
+};
+
+const clickPostedWorkAndCheckError = () => {
   cy.contains('POST WORK BID').click();
   cy.get('body').then(($checkError) => {
     const item = $checkError.find('#notistack-snackbar');
@@ -258,36 +276,6 @@ const writeNumberStaminaAndDusk = (number) => {
       cy.wait(5000);
     }
   });
-};
-
-const rnd = (a, b) => Math.floor(('0.' + (new Date().getMilliseconds() + ''.slice(1))) * (b - a)) + a;
-
-const clickPostedWork = (numberStamina) => {
-  const random = rnd(0, 7);
-  const random1 = rnd(1, 3);
-  const random2 = rnd(1, 3);
-  const random3 = rnd(1, 3);
-  const random4 = rnd(1, 2);
-  cy.get('.content').find('.item').eq(random).click();
-  cy.get('div[role="dialog"]').should('be.visible');
-  if (numberStamina >= 5) {
-    writeNumberStaminaAndDusk(random1);
-  }
-  if (numberStamina === 4) {
-    writeNumberStaminaAndDusk(random2);
-  }
-  if (numberStamina === 3) {
-    writeNumberStaminaAndDusk(random3);
-  }
-  if (numberStamina === 2) {
-    writeNumberStaminaAndDusk(random4);
-  }
-  if (numberStamina === 1) {
-    writeNumberStaminaAndDusk(1);
-  }
-  if (numberStamina === 0) {
-    cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
-  }
 };
 
 const clickMenuAndLogout = () => {
