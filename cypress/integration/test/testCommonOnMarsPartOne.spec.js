@@ -40,5 +40,9 @@ describe('ONMARS', () => {
     cy.writeFile('/tmp/dataActualUser.json', arr);
     onMarsCommon(Cypress.env('user_13'), Cypress.env('pas_13'), arr, 'USERNAME 13');
     cy.writeFile('/tmp/dataActualUser.json', arr);
+    onMarsCommon(Cypress.env('user_28'), Cypress.env('pas_28'), arr, 'USERNAME 28');
+    cy.writeFile('/tmp/dataActualUser.json', arr);
+    onMarsCommon(Cypress.env('user_29'), Cypress.env('pas_29'), arr, 'USERNAME 29');
+    cy.writeFile('/tmp/dataActualUser.json', arr);
   });
 });
