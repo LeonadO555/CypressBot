@@ -83,6 +83,7 @@ module.exports = function (on, config) {
   config.env.pas_28 = process.env.PASSWORD_28;
   config.env.user_29 = process.env.USERNAME_29;
   config.env.pas_29 = process.env.PASSWORD_29;
-
+  config.env.user_30 = process.env.USERNAME_30;
+  config.env.pas_30 = process.env.PASSWORD_30;
   return config;
 };
