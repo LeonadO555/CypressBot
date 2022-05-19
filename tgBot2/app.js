@@ -10,12 +10,12 @@ function getMainMenu() {
   return Markup.keyboard([['Users from 20 to 30'], ['Users from 30 to 41']]).resize();
 }
 
-let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
-let dataActualUserPartTwo = fs.readFileSync('/tmp/dataAllUser.json', 'utf8');
+let dataPartOne = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
+let dataPartTwo = fs.readFileSync('/tmp/dataAllUser.json', 'utf8');
 function getAllUsers() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(dataActualUser);
+      resolve(dataPartOne);
     }, 500);
   });
 }
@@ -23,7 +23,7 @@ function getAllUsers() {
 function getAllUsersPartTwo() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(dataActualUserPartTwo);
+      resolve(dataPartTwo);
     }, 500);
   });
 }
