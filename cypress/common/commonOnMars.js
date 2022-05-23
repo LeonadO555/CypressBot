@@ -31,7 +31,7 @@ const loginUser = (userName, userPassword) => {
 const checkCloseButton = () => {
   cy.get('body').then(($checkDialogMainPage) => {
     const dialog = $checkDialogMainPage.find('div[role="dialog"]');
-    if (dialog.text().includes('TOS Update!')) {
+    if (dialog.text().includes('A Friendly Reminder About the Rules')) {
       cy.task('log', 'Dialog visible');
       clickCloseButton();
     } else {
@@ -43,7 +43,7 @@ const checkCloseButton = () => {
 
 const clickCloseButton = () => {
   cy.get('div[role="dialog"]').should('be.visible');
-  cy.get('[role="none presentation"]').click('bottom', { multiple: true, force: true });
+  cy.get('div[role="none presentation"]').click('bottom', { multiple: true, force: true });
   cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
 };
 
@@ -273,7 +273,7 @@ const clickPostedWorkAndCheckError = () => {
     } else {
       cy.task('log', 'Successful');
       cy.contains('Successful').should('be.visible');
-      cy.wait(5000);
+      cy.wait(4000);
     }
   });
 };
