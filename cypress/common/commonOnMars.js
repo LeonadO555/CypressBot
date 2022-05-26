@@ -156,10 +156,19 @@ const checkStamina = (arr) => {
     });
 };
 
+const checkTime = (arr) => {
+  cy.get('div.container div.left div div.element:nth-child(2) > span:nth-child(2)')
+    .invoke('text')
+    .then((time) => {
+      arr.push(`Actual time: ${time}`);
+    });
+};
+
 const AllCheck = (arr) => {
   checkUser(arr);
   checkDusk(arr);
   checkStamina(arr);
+  checkTime(arr);
 };
 
 const clickConfirmButton = () => {
