@@ -17,7 +17,10 @@ export const onMarsCommon = (username, password, arr, logUser) => {
 const linkToJob = () => {
   cy.clearCookies();
   cy.visit('https://app.milliononmars.io');
-  cy.contains('Play Now').click();
+  cy.contains('COMMUNITY').should('be.visible');
+  cy.contains('PLAY NOW').should('be.visible');
+  cy.contains('BUY NFTS').should('be.visible');
+  cy.contains('PLAY NOW').click();
 };
 
 const loginUser = (userName, userPassword) => {
@@ -35,7 +38,7 @@ const checkCloseButton = () => {
       cy.task('log', 'Dialog visible');
       clickCloseButton();
     } else {
-      cy.contains('Actions').should('be.visible');
+      cy.get('button[title="Action - Eat Stuff"]').should('be.visible');
       cy.task('log', 'Dialog no visible');
     }
   });
@@ -68,7 +71,7 @@ const ifClaim = () => {
 };
 
 const clickCloseDialog = () => {
-  cy.get('div[role="dialog"]').get('button[type=button]').eq(5).should('be.visible').click({ multiple: true });
+  cy.get('.icon').should('be.visible').click({ multiple: true, force: true });
 };
 
 const ifNotClaim = () => {
@@ -84,7 +87,7 @@ const clickClaim = () => {
 };
 
 const openAction = () => {
-  cy.contains('Actions').should('be.visible').click();
+  cy.get('button[title="Action - Eat Stuff"]').should('be.visible').click();
   cy.task('log', 'Click Actions');
 };
 
@@ -127,8 +130,7 @@ const ifNoDisabledEatSnack = () => {
 };
 
 const checkDusk = (arr) => {
-  cy.get('div')
-    .get('div:nth-child(6) > span')
+  cy.get('div.MuiBox-root:nth-child(3) > span.MuiBox-root:nth-child(2)')
     .should('be.visible')
     .invoke('text')
     .then(parseInt)
@@ -138,9 +140,7 @@ const checkDusk = (arr) => {
 };
 
 const checkUser = (arr) => {
-  cy.get('div');
-  cy.get('#__next > header > div')
-    .find('> button > span.MuiButton-label > span')
+  cy.get('a[href="/profile"]')
     .should('be.visible')
     .invoke('text')
     .then((userName) => {
@@ -149,10 +149,8 @@ const checkUser = (arr) => {
 };
 
 const checkStamina = (arr) => {
-  cy.get('div[title="Stamina"]')
-    .get('div:nth-child(5) > span:nth-child(2)')
+  cy.get('div.MuiBox-root:nth-child(2) > span.MuiBox-root:nth-child(2)')
     .invoke('text')
-    .then(parseInt)
     .then((numberStamina) => {
       arr.push(`Stamina: ${numberStamina}`);
     });
@@ -171,8 +169,8 @@ const clickConfirmButton = () => {
 };
 
 const clickButtonTransferJob = () => {
-  cy.get('button:nth-child(2)').should('be.visible');
-  cy.get('button:nth-child(2)').click();
+  cy.get('button[title="Job Market"]').should('be.visible');
+  cy.get('button[title="Job Market"]').click();
 };
 
 const tookCompleteJob = () => {
@@ -199,12 +197,10 @@ const findWork = () => {
 };
 
 const tookWork = () => {
-  cy.get('div[title="Stamina"]')
-    .get('div:nth-child(5) > span:nth-child(2)')
+  cy.get('div.MuiBox-root:nth-child(2) > span.MuiBox-root:nth-child(2)')
     .invoke('text')
-    .then(parseInt)
     .then((numberStamina) => {
-      if (numberStamina === 0) {
+      if (numberStamina === '0 | 70') {
         cy.task('log', `Stamina ${numberStamina}`);
         clickCloseDialog();
         clickMenuAndLogout();
@@ -279,11 +275,11 @@ const clickPostedWorkAndCheckError = () => {
 };
 
 const clickMenuAndLogout = () => {
-  cy.get('button.MuiButtonBase-root:nth-child(6) > span:nth-child(1) > svg:nth-child(1)').click();
+  cy.get('div.container div.main div button:nth-child(4) div.MuiBox-root span:nth-child(1) > img:nth-child(1)').click();
   cy.wait(500);
-  cy.contains('Logout').click();
-  cy.contains('Play Now').should('be.visible');
-  cy.contains('Whitepaper').should('be.visible');
-  cy.contains('Company').should('be.visible');
+  cy.contains('Logout ').click();
+  cy.contains('PLAY NOW').should('be.visible');
+  cy.contains('COMMUNITY').should('be.visible');
+  cy.contains('BUY NFTS').should('be.visible');
   cy.task('log', 'I LOGOUT');
 };
