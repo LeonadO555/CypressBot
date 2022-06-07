@@ -4,8 +4,8 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   cy.task('log', logUser);
   checkAndTakeEat();
   cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
-  checkPack();
-  cy.task('log', 'I CATCH PACK');
+  // checkPack();
+  // cy.task('log', 'I CATCH PACK');
   AllCheck(arr);
   cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
   clickButtonTransferJob();
@@ -31,27 +31,27 @@ const loginUser = (userName, userPassword) => {
   cy.get('input[name="password"]').should('be.visible').type(userPassword).should('have.value', userPassword);
   cy.get('button[type="submit"]').should('be.visible').click();
   cy.task('log', 'Click login');
-  cy.get('[title = "Shop"]').click();
+  // cy.get('[title = "Shop"]').click();
 };
-const checkPack = () => {
-  cy.contains('Sunflower').should('be.visible');
-  cy.get(
-    '#__next > main > div > div > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-sm-2 > div > div > div:nth-child(6) > div > div > span'
-  ).click({ force: true });
-  cy.get(
-    '#__next > main > div > div > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-sm-6 > div > div > div:nth-child(12) > div'
-  ).click({ force: true });
-  cy.get('body').then(($disable) => {
-    const checkEatRation = $disable.find('button[aria-label="add"]');
-    if (!checkEatRation.attr('disabled')) {
-      cy.get('button[aria-label="add"]').click();
-      clickConfirmButton();
-      cy.contains('Close').click();
-    } else {
-      cy.task('log', 'I no catch Pack');
-    }
-  });
-};
+// const checkPack = () => {
+//   cy.contains('Sunflower').should('be.visible');
+//   cy.get(
+//     '#__next > main > div > div > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-sm-2 > div > div > div:nth-child(6) > div > div > span'
+//   ).click({ force: true });
+//   cy.get(
+//     '#__next > main > div > div > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-sm-6 > div > div > div:nth-child(12) > div'
+//   ).click({ force: true });
+//   cy.get('body').then(($disable) => {
+//     const checkEatRation = $disable.find('button[aria-label="add"]');
+//     if (!checkEatRation.attr('disabled')) {
+//       cy.get('button[aria-label="add"]').click();
+//       clickConfirmButton();
+//       cy.contains('Close').click();
+//     } else {
+//       cy.task('log', 'I no catch Pack');
+//     }
+//   });
+// };
 
 const checkCloseButton = () => {
   cy.get('body').then(($checkDialogMainPage) => {
@@ -73,11 +73,11 @@ const clickCloseButton = () => {
 };
 
 const checkAndTakeEat = () => {
-  cy.wait(10000);
   checkCloseButton();
+  cy.get('button[title="Action - Missions"]').click();
   cy.get('body').then(($claimButton) => {
-    const item = $claimButton.find('div[role="dialog"]').find('button[type="button"]').find('>span');
-    if (item.text().includes('Claim')) {
+    const checkEatRation = $claimButton.find('tr.MuiTableRow-root:nth-child(7)').find('button[aria-label="add"]');
+    if (!checkEatRation.attr('disabled')) {
       ifClaim();
     } else {
       ifNotClaim();
@@ -87,6 +87,7 @@ const checkAndTakeEat = () => {
 
 const ifClaim = () => {
   clickClaim();
+  clickCloseDialog();
   openAction();
   ifNoDisabledEatRation();
   clickCloseDialog();
@@ -98,13 +99,15 @@ const clickCloseDialog = () => {
 
 const ifNotClaim = () => {
   cy.task('log', 'I not click Claim');
+  clickCloseDialog();
   openAction();
   checkDisableEatRation();
   checkDisableEatSnack();
 };
 
 const clickClaim = () => {
-  cy.get('div[role="dialog"]').find('button[type="button"]').find('>span').contains('Claim').click();
+  cy.get('button[aria-label="add"]').contains('Daily Ration Claim').should('be.visible').click();
+  clickConfirmButton();
   cy.task('log', 'Click Claim');
 };
 
@@ -300,14 +303,14 @@ const clickPostedWorkAndCheckError = () => {
       cy.task('log', 'Insufficient player stamina');
     } else {
       cy.task('log', 'Successful');
-      cy.contains('Successful').should('be.visible');
-      cy.wait(4000);
     }
   });
 };
 
 const clickMenuAndLogout = () => {
-  cy.get('div.container div.main div button:nth-child(4) div.MuiBox-root span:nth-child(1) > img:nth-child(1)').click();
+  cy.get(
+    'div.withUser div.container div.MuiBox-root div button:nth-child(5) div.MuiBox-root span:nth-child(1) > img:nth-child(1)'
+  ).click();
   cy.wait(500);
   cy.contains('Logout ').click();
   cy.contains('PLAY NOW').should('be.visible');
