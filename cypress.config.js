@@ -11,7 +11,4 @@ module.exports = defineConfig({
   screenshotOnRunFailure: false,
   video: false,
   retries: { runMode: 0, openMode: 0 },
-  // component: {
-  //   supportFile: 'cypress/support/component.js',
-  // },
 });

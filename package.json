@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^9.4.1",
     "dotenv": "^16.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.3",
@@ -21,6 +20,7 @@
     "telegraf": "^4.7.0"
   },
   "devDependencies": {
+    "cypress": "^10.0.3",
     "cypress-log-to-output": "^1.1.2",
     "cypress-pipe": "^2.0.0",
     "nodemon": "^2.0.15",
