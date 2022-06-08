@@ -4,8 +4,6 @@ export const onMarsCommon = (username, password, arr, logUser) => {
   cy.task('log', logUser);
   checkAndTakeEat();
   cy.task('log', 'I HAVE PASSED THE STAGE OF TAKING FOOD');
-  // checkPack();
-  // cy.task('log', 'I CATCH PACK');
   AllCheck(arr);
   cy.task('log', 'I CHECKED THE STAMINA, DUSK, USERNAME');
   clickButtonTransferJob();
@@ -31,27 +29,7 @@ const loginUser = (userName, userPassword) => {
   cy.get('input[name="password"]').should('be.visible').type(userPassword).should('have.value', userPassword);
   cy.get('button[type="submit"]').should('be.visible').click();
   cy.task('log', 'Click login');
-  // cy.get('[title = "Shop"]').click();
 };
-// const checkPack = () => {
-//   cy.contains('Sunflower').should('be.visible');
-//   cy.get(
-//     '#__next > main > div > div > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-sm-2 > div > div > div:nth-child(6) > div > div > span'
-//   ).click({ force: true });
-//   cy.get(
-//     '#__next > main > div > div > div > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-sm-6 > div > div > div:nth-child(12) > div'
-//   ).click({ force: true });
-//   cy.get('body').then(($disable) => {
-//     const checkEatRation = $disable.find('button[aria-label="add"]');
-//     if (!checkEatRation.attr('disabled')) {
-//       cy.get('button[aria-label="add"]').click();
-//       clickConfirmButton();
-//       cy.contains('Close').click();
-//     } else {
-//       cy.task('log', 'I no catch Pack');
-//     }
-//   });
-// };
 
 const checkCloseButton = () => {
   cy.get('body').then(($checkDialogMainPage) => {
@@ -248,29 +226,15 @@ const tookWork = () => {
 
 const rnd = (a, b) => Math.floor(('0.' + (new Date().getMilliseconds() + ''.slice(1))) * (b - a)) + a;
 
-const clickPostedWork = (numberStamina) => {
+const clickPostedWork = () => {
   randomChangeWork();
-  randomReturnStaminaAndDusk(numberStamina);
+  writeNumberStaminaAndDusk(1);
 };
 
 const randomChangeWork = () => {
   const random = rnd(0, 7);
   cy.get('.content').find('.item').eq(random).click();
   cy.get('div[role="dialog"]').should('be.visible');
-};
-
-const randomReturnStaminaAndDusk = (numberStamina) => {
-  // const random = rnd(1, 3);
-  // if (numberStamina >= 2) {
-  //   writeNumberStaminaAndDusk(random);
-  // }
-  // if (numberStamina === 1) {
-  //
-  // }
-  // if (numberStamina === 0) {
-  //   cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
-  // }
-  writeNumberStaminaAndDusk(1);
 };
 
 const writeNumberStaminaAndDusk = (number) => {

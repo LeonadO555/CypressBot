@@ -1,4 +1,5 @@
-import { onMarsCommon } from '../../common/commonOnMars';
+import { onMarsCommon } from '../common/commonOnMars';
+
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
