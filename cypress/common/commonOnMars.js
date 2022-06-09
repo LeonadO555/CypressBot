@@ -238,32 +238,32 @@ const randomChangeWork = () => {
 };
 
 const writeNumberStaminaAndDusk = (number) => {
-  returnDusk(number);
-  returnStamina(number);
+  // returnDusk(number);
+  // returnStamina(number);
   clickPostedWorkAndCheckError();
 };
 
-const returnDusk = (number) => {
-  for (let i = 1; i < number; i++) {
-    cy.get(
-      'div.form-control:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
-    ).click({ force: true });
-  }
-};
-const returnStamina = (number) => {
-  for (let i = 1; i < number; i++) {
-    cy.get(
-      'div.form-control:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
-    ).click({ force: true });
-  }
-};
+// const returnDusk = (number) => {
+//   for (let i = 1; i < number; i++) {
+//     cy.get(
+//       'div.form-control:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
+//     ).click({ force: true });
+//   }
+// };
+// const returnStamina = (number) => {
+//   for (let i = 1; i < number; i++) {
+//     cy.get(
+//       'div.form-control:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > button:nth-child(1) > span:nth-child(1)'
+//     ).click({ force: true });
+//   }
+// };
 
 const clickPostedWorkAndCheckError = () => {
   cy.contains('POST WORK BID').click();
   cy.get('body').then(($checkError) => {
     const item = $checkError.find('#notistack-snackbar');
     if (item.text().includes('Insufficient player stamina')) {
-      cy.get('button:nth-child(1) > span:nth-child(1) > svg:nth-child(1) > path:nth-child(1)').click();
+      clickCloseDialog();
       cy.task('log', 'Insufficient player stamina');
     } else {
       cy.task('log', 'Successful');
