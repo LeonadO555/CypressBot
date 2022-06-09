@@ -24,7 +24,9 @@ function getAllUsers() {
 //   });
 // }
 function getMainMenu() {
-  return Markup.keyboard([['😎 Full users']]).resize();
+  return Markup.keyboard([['😎 Full users']])
+    .oneTime()
+    .resize();
 }
 
 bot.command('custom', async (ctx) => {
