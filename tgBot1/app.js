@@ -6,10 +6,6 @@ const fs = require('fs');
 const app = express();
 const bot = new Telegraf('5299538119:AAGbM3Zjv_Zs-WxnVZhM0M0edtfqHBs1HLg');
 
-function getMainMenu() {
-  return Markup.keyboard([{ text: 'Full users', callback_data: 'services' }]).resize();
-}
-
 let dataActualUser = fs.readFileSync('/tmp/dataActualUser.json', 'utf8');
 // let dataActualUserPartTwo = fs.readFileSync('/tmp/dataAllUser.json', 'utf8');
 function getAllUsers() {
