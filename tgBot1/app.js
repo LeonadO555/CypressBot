@@ -23,9 +23,17 @@ function getAllUsers() {
 //     }, 500);
 //   });
 // }
+// export function getMainMenu() {
+//   return Markup.keyboard([['Actual user viewing data'], ['All users viewing data'], ['Button for WebMonkey']]).resize();
+// }
 
-bot.command('/select', async (ctx) => {
-  return await ctx.reply(Markup.keyboard(['😎 Full users']).oneTime().resize());
+bot.command('custom', async (ctx) => {
+  return await ctx.reply(
+    'Custom buttons keyboard',
+    Markup.keyboard([['😎 Full users']])
+      .oneTime()
+      .resize()
+  );
 });
 
 bot.hears('😎 Full users', async (ctx) => {
