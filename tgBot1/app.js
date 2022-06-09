@@ -23,14 +23,9 @@ function getAllUsers() {
 //     }, 500);
 //   });
 // }
-bot.command('onetime', (ctx) => ctx.reply('One time keyboard', Markup.keyboard(['/select']).oneTime().resize()));
 
-bot.command('custom', async (ctx) => {
-  return await ctx.reply(
-    Markup.keyboard([['😎 Full users']])
-      .oneTime()
-      .resize()
-  );
+bot.command('/select', async (ctx) => {
+  return await ctx.reply(Markup.keyboard(['😎 Full users']).oneTime().resize());
 });
 
 bot.hears('😎 Full users', async (ctx) => {
