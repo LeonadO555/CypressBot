@@ -237,7 +237,7 @@ const randomChangeWork = () => {
   cy.get('div[role="dialog"]').should('be.visible');
 };
 
-const writeNumberStaminaAndDusk = (number) => {
+const writeNumberStaminaAndDusk = () => {
   // returnDusk(number);
   // returnStamina(number);
   clickPostedWorkAndCheckError();
