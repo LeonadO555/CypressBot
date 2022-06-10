@@ -17,7 +17,6 @@ export const onMarsCommon = (username, password, arr, logUser) => {
 const linkToJob = () => {
   cy.clearCookies();
   cy.visit('https://app.milliononmars.io');
-  cy.contains('COMMUNITY').should('be.visible');
   cy.contains('PLAY NOW').should('be.visible');
   cy.contains('BUY NFTS').should('be.visible');
   cy.contains('PLAY NOW').click();
@@ -261,7 +260,6 @@ const clickMenuAndLogout = () => {
   cy.wait(500);
   cy.contains('Logout ').click();
   cy.contains('PLAY NOW').should('be.visible');
-  cy.contains('COMMUNITY').should('be.visible');
   cy.contains('BUY NFTS').should('be.visible');
   cy.task('log', 'I LOGOUT');
 };
