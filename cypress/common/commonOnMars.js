@@ -95,7 +95,7 @@ const openAction = () => {
 
 const checkDisableEatRation = () => {
   cy.get('div[role="dialog"]').then(($eatRation) => {
-    const checkEatRation = $eatRation.find('tr.MuiTableRow-root:nth-child(5)').find('button[aria-label="add"]');
+    const checkEatRation = $eatRation.find('tr:nth-child(4) > td:nth-child(4)').find('> span > button');
     if (!checkEatRation.attr('disabled')) {
       ifNoDisabledEatRation();
     } else {
@@ -106,7 +106,7 @@ const checkDisableEatRation = () => {
 
 const checkDisableEatSnack = () => {
   cy.get('div[role="dialog"]').then(($eatSnack) => {
-    const checkEatRation = $eatSnack.find('tr:nth-child(4) > td:nth-child(4) > span > button');
+    const checkEatRation = $eatSnack.find('tr:nth-child(2) > td:nth-child(4)').find('> span > button');
     if (!checkEatRation.attr('disabled')) {
       ifNoDisabledEatSnack();
     } else {
@@ -124,7 +124,7 @@ const ifNoDisabledEatRation = () => {
 };
 
 const ifNoDisabledEatSnack = () => {
-  cy.get('button[aria-label="add"]').contains('Eat Snack').should('be.visible').click();
+  cy.get('tr:nth-child(2) > td:nth-child(4) > span > button').contains('Eat Snack (🎲)').should('be.visible').click();
   cy.task('log', 'click Eat Snack');
   clickConfirmButton();
   clickCloseDialog();
