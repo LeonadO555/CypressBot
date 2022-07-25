@@ -29,7 +29,7 @@ function getAllUsersPartTwo() {
 }
 
 bot.start((ctx) => {
-  ctx.reply(getMainMenu());
+  ctx.reply('ok', getMainMenu());
 });
 // bot.hears('Users from 1 to 10', async (ctx) => {
 //   const data = await getAllUsers();
