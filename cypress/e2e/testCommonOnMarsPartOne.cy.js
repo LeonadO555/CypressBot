@@ -12,7 +12,7 @@ describe('ONMARS', () => {
     const arr = [];
     for (let i = 1; i < 11; i++) {
       onMarsCommon(Cypress.env(`user_${i}`), Cypress.env(`pas_${i}`), arr, `USERNAME_${i}`);
-      cy.writeFile('/tmp/dataActualUser.json', arr);
+      cy.writeFile('/tmp/dataAllUser.json', arr);
     }
   });
 
@@ -28,7 +28,7 @@ describe('ONMARS', () => {
     const arr = [];
     for (let i = 21; i < 31; i++) {
       onMarsCommon(Cypress.env(`user_${i}`), Cypress.env(`pas_${i}`), arr, `USERNAME_${i}`);
-      cy.writeFile('/tmp/dataPartThree.json', arr);
+      cy.writeFile('/tmp/dataAllUser.json', arr);
     }
   });
 
@@ -36,7 +36,7 @@ describe('ONMARS', () => {
     const arr = [];
     for (let i = 31; i < 42; i++) {
       onMarsCommon(Cypress.env(`user_${i}`), Cypress.env(`pas_${i}`), arr, `USERNAME_${i}`);
-      cy.writeFile('/tmp/dataPartFour.json', arr);
+      cy.writeFile('/tmp/dataAllUser.json', arr);
     }
   });
 });
