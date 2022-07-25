@@ -185,16 +185,12 @@ const clickButtonTransferJob = () => {
 };
 
 const tookCompleteJob = () => {
-  cy.contains('Worked Jobs').should('be.visible');
-  cy.contains('Worked Jobs').click();
-  checkButtonCompleteJob();
-};
-
-const checkButtonCompleteJob = () => {
   cy.get('body').then(($complete) => {
     const tabList = $complete.find('div[role="tablist"]');
     if (!tabList.text().includes('Worked Jobs (0)')) {
-      cy.get('button[aria-label="add"]').click({ multiple: true, force: true }).wait(500);
+      cy.contains('Worked Jobs').should('be.visible');
+      cy.contains('Worked Jobs').click();
+      cy.contains('Complete All').click().wait(500);
       cy.task('log', 'Click Complete job');
     } else {
       cy.task('log', 'I don t have complete work');
