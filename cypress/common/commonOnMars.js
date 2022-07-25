@@ -53,7 +53,7 @@ const checkAndTakeEat = () => {
   checkCloseButton();
   cy.get('button[title="Action - Missions"]').click();
   cy.get('body').then(($claimButton) => {
-    const checkEatRation = $claimButton.find('tr.MuiTableRow-root:nth-child(7)').find('button[aria-label="add"]');
+    const checkEatRation = $claimButton.find('tr:nth-child(7) > td:nth-child(4)').find('> span > button');
     if (!checkEatRation.attr('disabled')) {
       ifClaim();
     } else {
@@ -83,7 +83,7 @@ const ifNotClaim = () => {
 };
 
 const clickClaim = () => {
-  cy.get('button[aria-label="add"]').contains('Daily Ration Claim').should('be.visible').click();
+  cy.get('button').contains('Daily Ration Claim').should('be.visible').click();
   clickConfirmButton();
   cy.task('log', 'Click Claim');
 };
@@ -106,7 +106,7 @@ const checkDisableEatRation = () => {
 
 const checkDisableEatSnack = () => {
   cy.get('div[role="dialog"]').then(($eatSnack) => {
-    const checkEatRation = $eatSnack.find('tr.MuiTableRow-root:nth-child(2)').find('button[aria-label="add"]');
+    const checkEatRation = $eatSnack.find('tr:nth-child(4) > td:nth-child(4) > span > button');
     if (!checkEatRation.attr('disabled')) {
       ifNoDisabledEatSnack();
     } else {
@@ -117,7 +117,7 @@ const checkDisableEatSnack = () => {
 };
 
 const ifNoDisabledEatRation = () => {
-  cy.get('button[aria-label="add"]').contains('Eat Ration').should('be.visible').click();
+  cy.get('tr:nth-child(4) > td:nth-child(4) > span > button').contains('Eat Ration (🎲)').should('be.visible').click();
   cy.task('log', 'click Eat Ration');
   clickConfirmButton();
   cy.task('log', 'I catch Eat Ration');
