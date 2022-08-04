@@ -7,7 +7,7 @@ before(function () {
   cy.clearCookies();
 });
 
-describe('ONMARS', () => {
+describe('ONMARS THREE', () => {
   it('TOOK WORK PART THREE', () => {
     const arr = [];
     for (let i = 21; i < 31; i++) {
