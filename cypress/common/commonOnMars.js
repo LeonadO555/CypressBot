@@ -195,7 +195,6 @@ const checkButtonCompleteAll = () => {
 };
 
 const findWork = () => {
-  cy.contains('Find Work').should('be.visible');
   cy.contains('Find Work').click();
 };
 
