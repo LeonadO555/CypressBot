@@ -195,7 +195,9 @@ const checkButtonCompleteAll = () => {
 };
 
 const findWork = () => {
-  cy.contains('Find Work').click({ force: true });
+  cy.get('div > button.MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit.Mui-selected > span.MuiTab-wrapper')
+    .contains('Find Work')
+    .click({ force: true });
 };
 
 const tookWork = () => {
