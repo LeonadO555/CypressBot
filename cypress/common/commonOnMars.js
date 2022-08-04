@@ -30,25 +30,6 @@ const loginUser = (userName, userPassword) => {
   cy.task('log', 'Click login');
 };
 
-// const checkCloseButton = () => {
-//   cy.get('body').then(($checkDialogMainPage) => {
-//     const dialog = $checkDialogMainPage.find('div[role="dialog"]');
-//     if (dialog.text().includes('A Friendly Reminder About the Rules')) {
-//       cy.task('log', 'Dialog visible');
-//       clickCloseButton();
-//     } else {
-//       cy.get('button[title="Action - Missions"]').should('be.visible');
-//       cy.task('log', 'Dialog no visible');
-//     }
-//   });
-// };
-
-// const clickCloseButton = () => {
-//   cy.get('div[role="dialog"]').should('be.visible');
-//   cy.get('div[role="none presentation"]').click('bottom', { multiple: true, force: true });
-//   cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
-// };
-
 const checkAndTakeEat = () => {
   cy.get('button[title="Action - Missions"]').click();
   cy.get('table > tbody > tr:nth-child(7) > td:nth-child(4) > span > button').should('be.visible');
