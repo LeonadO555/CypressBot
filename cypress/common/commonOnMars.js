@@ -37,7 +37,7 @@ const checkCloseButton = () => {
       cy.task('log', 'Dialog visible');
       clickCloseButton();
     } else {
-      cy.get('button[title="Action - Eat Stuff"]').should('be.visible');
+      cy.get('button[title="Action - Missions"]').should('be.visible');
       cy.task('log', 'Dialog no visible');
     }
   });
@@ -53,7 +53,9 @@ const checkAndTakeEat = () => {
   checkCloseButton();
   cy.get('button[title="Action - Missions"]').click();
   cy.get('body').then(($claimButton) => {
-    const checkEatRation = $claimButton.find('tr:nth-child(7) > td:nth-child(4)').find('> span > button');
+    const checkEatRation = $claimButton.find(
+      'body > div.MuiDialog-root > div.MuiDialog-container.MuiDialog-scrollPaper > div > div > div.MuiDialogContent-root > table > tbody > tr:nth-child(7) > td:nth-child(4) > span > button'
+    );
     if (!checkEatRation.attr('disabled')) {
       ifClaim();
     } else {
@@ -83,13 +85,16 @@ const ifNotClaim = () => {
 };
 
 const clickClaim = () => {
-  cy.get('button').contains('Daily Ration Claim').should('be.visible').click();
+  cy.get('tr:nth-child(7) > td:nth-child(4) > span > button > span.MuiButton-label > span')
+    .contains('Daily Ration Claim')
+    .should('be.visible')
+    .click();
   clickConfirmButton();
   cy.task('log', 'Click Claim');
 };
 
 const openAction = () => {
-  cy.get('button[title="Action - Eat Stuff"]').should('be.visible').click();
+  cy.get('button[title="Action - Stamina"]').should('be.visible').click();
   cy.task('log', 'Click Actions');
 };
 
@@ -159,7 +164,7 @@ const checkStamina = (arr) => {
 };
 
 const checkTime = (arr) => {
-  cy.get('div.container div.left div div.element:nth-child(2) > span:nth-child(2)')
+  cy.get('div.container > div.right > div > div:nth-child(2) > span')
     .invoke('text')
     .then((time) => {
       arr.push(`Actual time: ${time}`);
