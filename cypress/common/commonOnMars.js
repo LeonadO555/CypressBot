@@ -174,10 +174,21 @@ const tookCompleteJob = () => {
     if (!tabList.text().includes('Worked Jobs (0)')) {
       cy.contains('Worked Jobs').should('be.visible');
       cy.contains('Worked Jobs').click();
-      cy.contains('Complete All').click().wait(500);
-      cy.task('log', 'Click Complete job');
+      checkButtonCompleteAll();
     } else {
       cy.task('log', 'I don t have complete work');
+    }
+  });
+};
+
+const checkButtonCompleteAll = () => {
+  cy.get('div[role="dialog"]').then(($workedJobs) => {
+    const checkWorkedJobs = $workedJobs.find('#simple-tabpanel-2 > div > button');
+    if (!checkWorkedJobs.attr('disabled')) {
+      cy.contains('Complete All').click().wait(500);
+      cy.task('log', 'Click Complete All');
+    } else {
+      cy.task('log', 'Button Complete All disabled');
     }
   });
 };
