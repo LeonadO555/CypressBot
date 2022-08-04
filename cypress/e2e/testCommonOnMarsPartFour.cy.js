@@ -10,7 +10,7 @@ before(function () {
 describe('ONMARS', () => {
   it('TOOK WORK PART ONE', () => {
     const arr = [];
-    for (let i = 1; i < 11; i++) {
+    for (let i = 31; i < 42; i++) {
       onMarsCommon(Cypress.env(`user_${i}`), Cypress.env(`pas_${i}`), arr, `USERNAME_${i}`);
       cy.writeFile('/tmp/dataAllUser.json', arr);
     }
