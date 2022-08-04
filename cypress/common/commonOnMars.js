@@ -182,6 +182,7 @@ const tookCompleteJob = () => {
 };
 
 const checkButtonCompleteAll = () => {
+  cy.get('#simple-tabpanel-2 > div > button').should('be.visible').click();
   cy.get('div[role="dialog"]').then(($workedJobs) => {
     const checkWorkedJobs = $workedJobs.find('#simple-tabpanel-2 > div > button');
     if (!checkWorkedJobs.attr('disabled')) {
