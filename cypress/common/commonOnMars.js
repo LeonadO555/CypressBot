@@ -30,32 +30,30 @@ const loginUser = (userName, userPassword) => {
   cy.task('log', 'Click login');
 };
 
-const checkCloseButton = () => {
-  cy.get('body').then(($checkDialogMainPage) => {
-    const dialog = $checkDialogMainPage.find('div[role="dialog"]');
-    if (dialog.text().includes('A Friendly Reminder About the Rules')) {
-      cy.task('log', 'Dialog visible');
-      clickCloseButton();
-    } else {
-      cy.get('button[title="Action - Missions"]').should('be.visible');
-      cy.task('log', 'Dialog no visible');
-    }
-  });
-};
+// const checkCloseButton = () => {
+//   cy.get('body').then(($checkDialogMainPage) => {
+//     const dialog = $checkDialogMainPage.find('div[role="dialog"]');
+//     if (dialog.text().includes('A Friendly Reminder About the Rules')) {
+//       cy.task('log', 'Dialog visible');
+//       clickCloseButton();
+//     } else {
+//       cy.get('button[title="Action - Missions"]').should('be.visible');
+//       cy.task('log', 'Dialog no visible');
+//     }
+//   });
+// };
 
-const clickCloseButton = () => {
-  cy.get('div[role="dialog"]').should('be.visible');
-  cy.get('div[role="none presentation"]').click('bottom', { multiple: true, force: true });
-  cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
-};
+// const clickCloseButton = () => {
+//   cy.get('div[role="dialog"]').should('be.visible');
+//   cy.get('div[role="none presentation"]').click('bottom', { multiple: true, force: true });
+//   cy.task('log', 'I CLOSED ALL WINDOW DIALOG');
+// };
 
 const checkAndTakeEat = () => {
-  checkCloseButton();
   cy.get('button[title="Action - Missions"]').click();
-  cy.get('body').then(($claimButton) => {
-    const checkEatRation = $claimButton.find(
-      'body > div.MuiDialog-root > div.MuiDialog-container.MuiDialog-scrollPaper > div > div > div.MuiDialogContent-root > table > tbody > tr:nth-child(7) > td:nth-child(4) > span > button'
-    );
+  cy.get('table > tbody > tr:nth-child(7) > td:nth-child(4) > span > button').should('be.visible');
+  cy.get('div[role="dialog"]').then(($claimButton) => {
+    const checkEatRation = $claimButton.find('table > tbody > tr:nth-child(7) > td:nth-child(4) > span > button');
     if (!checkEatRation.attr('disabled')) {
       ifClaim();
     } else {
@@ -85,7 +83,7 @@ const ifNotClaim = () => {
 };
 
 const clickClaim = () => {
-  cy.get('tr:nth-child(7) > td:nth-child(4) > span > button > span.MuiButton-label > span')
+  cy.get('tr:nth-child(7) > td:nth-child(4) > span > button')
     .contains('Daily Ration Claim')
     .should('be.visible')
     .click();
