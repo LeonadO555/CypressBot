@@ -32,44 +32,27 @@ const loginUser = (userName, userPassword) => {
 
 const checkAndTakeEat = () => {
   cy.get('button[title="Action - Missions"]').click();
-  cy.get('table > tbody > tr:nth-child(7) > td:nth-child(4) > span > button').should('be.visible');
+  cy.contains('Daily Ration Claim').should('be.visible');
   cy.get('div[role="dialog"]').then(($claimButton) => {
-    const checkEatRation = $claimButton.find('table > tbody > tr:nth-child(7) > td:nth-child(4) > span > button');
+    const checkEatRation = $claimButton.find(
+      'div:nth-child(7) > div > div.ActionItem_actionItemContent___TWsN > button'
+    );
     if (!checkEatRation.attr('disabled')) {
-      ifClaim();
+      ifDailyRationClaimNoDisabled();
     } else {
-      ifNotClaim();
+      ifDailyRationClaimDisabled();
     }
   });
 };
 
-const ifClaim = () => {
-  clickClaim();
-  clickCloseDialog();
-  openAction();
-  ifNoDisabledEatRation();
-  clickCloseDialog();
+const clickDailyRationClaim = () => {
+  cy.get('[type="button"]').contains('Daily Ration Claim').click();
+  clickConfirmButton();
+  cy.task('log', 'Click Claim');
 };
 
 const clickCloseDialog = () => {
   cy.get('.icon').should('be.visible').click({ multiple: true, force: true });
-};
-
-const ifNotClaim = () => {
-  cy.task('log', 'I not click Claim');
-  clickCloseDialog();
-  openAction();
-  checkDisableEatRation();
-  checkDisableEatSnack();
-};
-
-const clickClaim = () => {
-  cy.get('tr:nth-child(7) > td:nth-child(4) > span > button')
-    .contains('Daily Ration Claim')
-    .should('be.visible')
-    .click();
-  clickConfirmButton();
-  cy.task('log', 'Click Claim');
 };
 
 const openAction = () => {
@@ -77,42 +60,41 @@ const openAction = () => {
   cy.task('log', 'Click Actions');
 };
 
-const checkDisableEatRation = () => {
-  cy.get('div[role="dialog"]').then(($eatRation) => {
-    const checkEatRation = $eatRation.find('tr:nth-child(4) > td:nth-child(4)').find('> span > button');
-    if (!checkEatRation.attr('disabled')) {
-      ifNoDisabledEatRation();
-    } else {
-      cy.task('log', 'I no catch Eat Ration');
-    }
-  });
-};
-
-const checkDisableEatSnack = () => {
-  cy.get('div[role="dialog"]').then(($eatSnack) => {
-    const checkEatRation = $eatSnack.find('tr:nth-child(2) > td:nth-child(4)').find('> span > button');
-    if (!checkEatRation.attr('disabled')) {
-      ifNoDisabledEatSnack();
-    } else {
-      clickCloseDialog();
-      cy.task('log', 'I no catch Eat Snack');
-    }
-  });
-};
-
 const ifNoDisabledEatRation = () => {
-  cy.get('tr:nth-child(4) > td:nth-child(4) > span > button').contains('Eat Ration (🎲)').should('be.visible').click();
+  cy.get('[type="button"]').contains('Eat Ration (🎲)').click();
   cy.task('log', 'click Eat Ration');
   clickConfirmButton();
   cy.task('log', 'I catch Eat Ration');
 };
 
-const ifNoDisabledEatSnack = () => {
-  cy.get('tr:nth-child(2) > td:nth-child(4) > span > button').contains('Eat Snack (🎲)').should('be.visible').click();
-  cy.task('log', 'click Eat Snack');
-  clickConfirmButton();
+const ifDailyRationClaimNoDisabled = () => {
+  clickDailyRationClaim();
   clickCloseDialog();
-  cy.task('log', 'I catch Eat Snack');
+  openAction();
+  ifNoDisabledEatRation();
+  clickCloseDialog();
+};
+
+const ifDailyRationClaimDisabled = () => {
+  cy.task('log', 'I not click Claim');
+  clickCloseDialog();
+  openAction();
+  checkDisableEatRation();
+};
+
+const checkDisableEatRation = () => {
+  cy.get('div[role="dialog"]').then(($eatRation) => {
+    const checkEatRation = $eatRation.find(
+      'div > div:nth-child(4) > div > div.ActionItem_actionItemContent___TWsN > button'
+    );
+    if (!checkEatRation.attr('disabled')) {
+      ifNoDisabledEatRation();
+      clickCloseDialog();
+    } else {
+      cy.task('log', 'I no catch Eat Ration');
+      clickCloseDialog();
+    }
+  });
 };
 
 const checkDusk = (arr) => {
@@ -169,24 +151,12 @@ const clickButtonTransferJob = () => {
 };
 
 const tookCompleteJob = () => {
-  cy.get('body').then(($complete) => {
-    const tabList = $complete.find('div[role="tablist"]');
-    if (!tabList.text().includes('Worked Jobs (0)')) {
-      cy.contains('Worked Jobs').should('be.visible');
-      cy.contains('Worked Jobs').click();
-      checkButtonCompleteAll();
-    } else {
-      cy.task('log', 'I don t have complete work');
-    }
-  });
-};
-
-const checkButtonCompleteAll = () => {
-  cy.get('#simple-tabpanel-2 > div > button').should('be.visible').click();
+  cy.contains('Worked Jobs').click();
+  cy.wait(1000);
   cy.get('div[role="dialog"]').then(($workedJobs) => {
     const checkWorkedJobs = $workedJobs.find('#simple-tabpanel-2 > div > button');
     if (!checkWorkedJobs.attr('disabled')) {
-      cy.contains('Complete All').click().wait(500);
+      cy.contains('Complete All').click().wait(1000);
       cy.task('log', 'Click Complete All');
     } else {
       cy.task('log', 'Button Complete All disabled');
@@ -195,9 +165,7 @@ const checkButtonCompleteAll = () => {
 };
 
 const findWork = () => {
-  cy.get('div > button.MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit.Mui-selected > span.MuiTab-wrapper')
-    .contains('Find Work')
-    .click({ force: true });
+  cy.contains('Find Work').click();
 };
 
 const tookWork = () => {
